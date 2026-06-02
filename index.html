@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+conm<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -320,7 +320,7 @@ const SKEY = "ff_engine_tracker_v1";
 let state = {};      // { d1:{ active flags }, lifts keyed by dayId+index }
 let activeDay = "d1";
 let mem = null;      // in-memory fallback
-const HAS_STORAGE = (typeof window!=="undefined" && window.storage && typeof window.storage.get==="function");
+const STORAGE_KEY = "ff_engine_tracker_v1";
 
 function blankFor(){
   const s = { activeDay:"d1", log:{} };
@@ -333,35 +333,57 @@ function blankFor(){
   return s;
 }
 async function loadState(){
-  let loaded=null;
-  if(HAS_STORAGE){
-    try{ const r=await window.storage.get(SKEY); if(r&&r.value) loaded=JSON.parse(r.value);}catch(e){loaded=null;}
-  } else if(mem){ loaded=mem; }
-  const base=blankFor();
-  if(loaded){
-    base.activeDay = loaded.activeDay||"d1";
-    PROGRAM.days.forEach(d=>{
-      const L=loaded.log&&loaded.log[d.id]; if(!L) return;
+  let loaded = null;
+
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) loaded = JSON.parse(raw);
+  } catch (e) {
+    loaded = null;
+  }
+
+  const base = blankFor();
+
+  if (loaded) {
+    base.activeDay = loaded.activeDay || "d1";
+
+    PROGRAM.days.forEach(d => {
+      const L = loaded.log?.[d.id];
+      if (!L) return;
+
       base.log[d.id].rest = !!L.rest;
-      (d.ex||[]).forEach((e,i)=>{
-        const x=L.ex&&L.ex[i]; if(!x) return;
-        base.log[d.id].ex[i].w = x.w||"";
-        base.log[d.id].ex[i].feel = x.feel||"";
-        base.log[d.id].ex[i].notes = x.notes||"";
-        if(Array.isArray(x.sets)) for(let k=0;k<e.sets;k++) base.log[d.id].ex[i].sets[k]=!!x.sets[k];
+
+      (d.ex || []).forEach((e, i) => {
+        const x = L.ex?.[i];
+        if (!x) return;
+
+        base.log[d.id].ex[i].w = x.w || "";
+        base.log[d.id].ex[i].feel = x.feel || "";
+        base.log[d.id].ex[i].notes = x.notes || "";
+
+        if (Array.isArray(x.sets)) {
+          for (let k = 0; k < e.sets; k++) {
+            base.log[d.id].ex[i].sets[k] = !!x.sets[k];
+          }
+        }
       });
     });
   }
-  state=base; activeDay=base.activeDay;
+
+  state = base;
+  activeDay = base.activeDay;
 }
 let saveT=null;
 function saveState(){
-  state.activeDay=activeDay;
-  if(saveT) clearTimeout(saveT);
-  saveT=setTimeout(async()=>{
-    mem=state;
-    if(HAS_STORAGE){ try{ await window.storage.set(SKEY, JSON.stringify(state)); }catch(e){} }
-  },350);
+  state.activeDay = activeDay;
+
+  if (saveT) clearTimeout(saveT);
+
+  saveT = setTimeout(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {}
+  }, 350);
 }
 
 /* ---------------- PROGRESS ---------------- */
