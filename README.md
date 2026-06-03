@@ -26,7 +26,7 @@ This program is designed to:
 
 ---
 
-### URL LINK:  👉 https://jasiek-13.github.io/Training-Plan-Logger/
+### URL LINK:  👉 [https://jasiek-13.github.io/Training-Plan-Logger/](https://jasiek-13.github.io/Training-Plan-Logger/)
 
 ---
 
