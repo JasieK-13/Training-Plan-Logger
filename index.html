@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>FF ENGINE · Week 1</title>
+<title>FF ENGINE · Week 2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -254,7 +254,7 @@
 <div class="wrap">
   <header>
     <div class="kicker">Firefighter Acceleration · Block A</div>
-    <h1>FF <span>ENGINE</span><br>WEEK 1</h1>
+    <h1>FF <span>ENGINE</span><br>WEEK 2</h1>
     <div class="sub">2 strength (maintain) + 3 cardio (priority) + 2 rest. Cardio is the gate — strength holds on low volume. Target: pass &amp; exceed Bucks bleep (8.6), build the engine underneath it.</div>
     <div class="banner"><b>How to use:</b> each set has its <b>own weight + own feel + own tick</b>. Tap a set's feel pill (E/O/H) to mark just that set. Warm-ups are specified per lift — don't skip them. End each day with the <b>strongest/weakest</b> reflection. Hit <b>"Copy log for Claude"</b> and paste it back to me.</div>
 
@@ -329,7 +329,7 @@
 <script>
 /* ---------------- PROGRAM DATA ---------------- */
 const PROGRAM = {
-  week: "WEEK 1",
+  week: "WEEK 2",
   days: [
     { id:"d1", tag:"MON", short:"Strength A", type:"Strength", focus:"Full body · lower + push emphasis",
       cool:"Cooldown: 3–5 min walk + quad/hip stretch.",
@@ -341,9 +341,9 @@ const PROGRAM = {
         { n:"Bench Press", s:"4 × 5", sets:4, rest:150, t:"57.5 kg", unit:"kg",
           warm:"Bar × 10  →  30kg × 5  →  45kg × 3  →  working sets",
           c:"Shoulder blades pinned, control down, leg drive. <em>All 4 working sets at target — don't ramp into them.</em>" },
-        { n:"Pull-ups", s:"4 × 6", sets:4, rest:120, t:"BW (+2.5kg if easy)", unit:"free",
+        { n:"Pull-ups", s:"4 × 6", sets:4, rest:120, t:"BW ×2  +  +5kg ×2", unit:"free",
           warm:"2 × 15s dead hang + 3 BW reps to activate",
-          c:"Full dead hang, chin clearly over the bar, no kip. <em>Add weight in SMALL steps (+2.5kg). Big jumps blow up set 4.</em>" },
+          c:"Full dead hang, chin clearly over the bar, no kip. <em>Sets 1–2 at bodyweight, sets 3–4 with +5kg. NO jumping to +10kg — that's what blew up set 4 last time.</em>" },
         { n:"Romanian Deadlift", s:"3 × 8", sets:3, rest:120, t:"~55 kg", unit:"kg",
           warm:"Bar × 8  →  40kg × 5  →  working sets",
           c:"Hinge at hips, soft knees, feel hamstrings, neutral spine. RPE 7." },
@@ -401,9 +401,9 @@ const PROGRAM = {
       cool:"Cooldown: 3 min walk + light stretch.",
       kind:"cardio",
       ex:[
-        { n:"Easy Continuous Run", s:"28 min", sets:1, rest:0, t:"Conversational · ~65% HR", unit:"free",
-          c:"<em>Must feel easy — full sentences, nose-breathing-able.</em> If you can't talk, slow down. This base is what the bleep sits on.",
-          logType:"cardio", logPH:"e.g. 4.0km / 28min / felt easy" },
+        { n:"Easy Continuous Run", s:"30 min", sets:1, rest:0, t:"Conversational · ~65% HR · SLOWER not faster", unit:"free",
+          c:"<em>Must feel easy — full sentences, nose-breathing-able.</em> If avg HR creeps above 145, slow down. You should be able to drop to a walk without touching the speed.",
+          logType:"cardio", logPH:"e.g. 4.0km / 30min / felt easy" },
         { n:"Dead Hangs (finisher)", s:"3 × max", sets:3, rest:60, t:"BW", unit:"sec",
           c:"Hang for max time, relaxed shoulders. Log seconds per hang.",
           logType:"cardio", logPH:"e.g. 55s" }
@@ -421,55 +421,13 @@ const PROGRAM = {
       note:"Alt option: 5 × 3 min hard / 2 min easy. Pick one, log which." },
 
     { id:"d7", tag:"SUN", short:"REST", type:"Recovery", focus:"", kind:"rest",
-      msg:"Full recovery. Sleep + protein. Paste me your week's logs and I'll build Week 2." },
+      msg:"Full recovery. Sleep + protein. Paste me your week's logs and I'll build Week 3." },
 
     { id:"stats", tag:"📊", short:"Stats", type:"Progress", kind:"stats" }
   ]
 };
 
-/* ---------------- DAY 1 PRE-FILL (from chat log) ---------------- */
-const PREFILL_D1 = {
-  ex: {
-    0: { sets:[
-        { v:"55",   r:"5", feel:"Easy", done:true },
-        { v:"57.5", r:"5", feel:"OK",   done:true },
-        { v:"57.5", r:"5", feel:"OK",   done:true },
-        { v:"57.5", r:"5", feel:"OK",   done:true } ],
-      notes:"55kg first as warm-in, 57.5kg all working sets. No pain. (Next time: warm up SEPARATELY, then 4×5 at 57.5)" },
-    1: { sets:[
-        { v:"50",   r:"5", feel:"OK",   done:true },
-        { v:"55",   r:"5", feel:"OK",   done:true },
-        { v:"57.5", r:"5", feel:"Hard", done:true },
-        { v:"57.5", r:"5", feel:"Hard", done:true } ],
-      notes:"Warm-up 10×bar + 40×5. Ramped through working weights — next time go bar→30→45→4×5 at 57.5 properly." },
-    2: { sets:[
-        { v:"BW",        r:"6",   feel:"OK",   done:true },
-        { v:"BW",        r:"6",   feel:"Easy", done:true },
-        { v:"+10kg",     r:"6",   feel:"Hard", done:true },
-        { v:"+10→+5kg",  r:"4+2", feel:"Hard", done:true } ],
-      notes:"Set 4: 4 reps at +10kg then dropped to +5kg for 2 more (drop set). +10kg too big a jump. Next: BW × 2 + 5kg × 2." },
-    3: { sets:[
-        { v:"50", r:"8", feel:"Easy", done:true },
-        { v:"55", r:"8", feel:"OK",   done:true },
-        { v:"55", r:"8", feel:"OK",   done:true } ],
-      notes:"55kg confirmed. Push 57.5 next week." },
-    4: { sets:[
-        { v:"24", r:"40m", feel:"OK",   done:true },
-        { v:"24", r:"40m", feel:"Hard", done:true },
-        { v:"24", r:"40m", feel:"Hard", done:true } ],
-      notes:"Grip slipped at ~30m on sets 2-3. 24kg at the edge. Next: 22kg × 3×40m UNBROKEN, then progress." },
-    5: { sets:[
-        { v:"BW", r:"10", feel:"OK", done:true },
-        { v:"BW", r:"10", feel:"OK", done:true },
-        { v:"BW", r:"9",  feel:"OK", done:true } ],
-      notes:"Grip was the limiter, not abs. Use straps next time so abs actually get worked." }
-  },
-  reflection: {
-    strongest: "Legs — squats clean & pain-free, RDL progressed mid-session.",
-    weakest:   "Grip endurance — showed in farmer carry (slipped at 30m) and capped abs on hanging leg raise.",
-    overall:   "OK"
-  }
-};
+/* (Day 1 pre-fill removed — Week 1 now starts clean on restart) */
 
 /* ---------------- STATE + STORAGE ---------------- */
 const SKEY = "ff_engine_tracker_v2";
@@ -486,12 +444,7 @@ function blankFor(){
       s.log[d.id].ex[i] = { sets: Array(e.sets).fill(0).map(()=>blankSet()), notes:"" };
     });
   });
-  // pre-fill Day 1
-  Object.entries(PREFILL_D1.ex).forEach(([i,data])=>{
-    s.log.d1.ex[+i].sets = data.sets.map(x=>({...x}));
-    s.log.d1.ex[+i].notes = data.notes;
-  });
-  s.log.d1.reflection = {...PREFILL_D1.reflection};
+  // pre-fill removed — Week 1 starts clean
   return s;
 }
 async function loadState(){
@@ -673,7 +626,7 @@ function renderDay(d){
   const rfx=document.createElement("div"); rfx.className="reflect";
   rfx.innerHTML=`
     <h3>End of session</h3>
-    <p>Helps me adjust Week 2 faster. Skip if you don't have it.</p>
+    <p>Helps me adjust Week 3 faster. Skip if you don't have it.</p>
     <div class="rfield"><span class="rk">What felt strongest</span>
       <textarea data-rf="strongest" placeholder="e.g. legs — squats clean, RDL progressed">${esc(R.strongest)}</textarea></div>
     <div class="rfield"><span class="rk">What felt weakest</span>
@@ -707,7 +660,7 @@ function esc(s){ return String(s||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;
 function renderStats(){
   const p=document.getElementById("dayPanel"); p.innerHTML="";
   const head=document.createElement("div"); head.className="dayhead";
-  head.innerHTML=`<div class="type">Progress</div><h2>Stats</h2><div class="focus">Week 1 baseline · will grow week over week</div>`;
+  head.innerHTML=`<div class="type">Progress</div><h2>Stats</h2><div class="focus">Week 2 baseline · will grow week over week</div>`;
   p.appendChild(head);
 
   // Summary
@@ -724,7 +677,7 @@ function renderStats(){
   });
   const sum=document.createElement("div"); sum.className="ex statsCard";
   sum.innerHTML=`
-    <div class="top"><div class="nm">Week 1 Summary</div></div>
+    <div class="top"><div class="nm">Week 2 Summary</div></div>
     <div class="statgrid">
       <div class="statcell"><div class="k">Sets done</div><div class="v">${totalDone}<span style="font-size:13px;color:var(--muted);"> / ${totalAll}</span></div></div>
       <div class="statcell"><div class="k">Completion</div><div class="v">${totalAll?Math.round(totalDone/totalAll*100):0}%</div></div>
@@ -883,18 +836,35 @@ document.getElementById("mcopy").onclick=async()=>{
 };
 
 /* ---------------- RESET ---------------- */
-document.getElementById("resetWeek").onclick=async()=>{
-  if(!confirm("Clear all logs and start a fresh week? (Use this once I've sent you the next week.)")) return;
-  // archive could go here in future; for now reset to blank (not pre-filled)
-  const fresh = { version:"v2", activeView:"d1", log:{} };
-  PROGRAM.days.forEach(d=>{
-    if(d.kind==="stats") return;
-    fresh.log[d.id] = { rest:false, reflection:{ strongest:"", weakest:"", overall:"" }, ex:{} };
-    (d.ex||[]).forEach((e,i)=>{ fresh.log[d.id].ex[i] = { sets: Array(e.sets).fill(0).map(()=>blankSet()), notes:"" }; });
-  });
-  state=fresh; activeView="d1";
+let resetArmed=false, resetTimer=null;
+const resetBtn = document.getElementById("resetWeek");
+const resetDefaultText = "↻ Start new week (clear logs)";
+function disarmReset(){
+  resetArmed=false;
+  resetBtn.textContent = resetDefaultText;
+  resetBtn.style.color = "";
+  resetBtn.style.borderColor = "";
+  resetBtn.style.background = "";
+  if(resetTimer){ clearTimeout(resetTimer); resetTimer=null; }
+}
+resetBtn.onclick = ()=>{
+  if(!resetArmed){
+    resetArmed = true;
+    resetBtn.textContent = "⚠ Tap again to confirm — clears all logs";
+    resetBtn.style.color = "var(--hard)";
+    resetBtn.style.borderColor = "var(--hard)";
+    resetBtn.style.background = "rgba(248,113,113,.10)";
+    if(resetTimer) clearTimeout(resetTimer);
+    resetTimer = setTimeout(disarmReset, 4000);
+    return;
+  }
+  // confirmed
+  disarmReset();
+  state = blankFor();
+  activeView = "d1";
   try{ localStorage.setItem(SKEY, JSON.stringify(state)); }catch(e){}
-  renderTabs(); render(); refreshProgress(); window.scrollTo({top:0,behavior:"smooth"});
+  renderTabs(); render(); refreshProgress();
+  window.scrollTo({top:0,behavior:"smooth"});
 };
 
 /* ---------------- WAKE LOCK (keep screen on) ---------------- */
