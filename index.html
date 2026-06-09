@@ -248,6 +248,44 @@
   .wakebtn.on{background:rgba(255,171,46,.15);border-color:var(--accent2);color:var(--accent2);box-shadow:0 0 12px -2px rgba(255,171,46,.3);}
   .wakebtn:active{transform:scale(.96);}
   .wakebtn.gone{display:none;}
+
+  /* SHUTTLE AUDIO CARD */
+  .audiocard{background:linear-gradient(180deg, rgba(125,211,252,.04), var(--card));}
+  .audiocard::before{background:linear-gradient(180deg,#7dd3fc,transparent)!important;opacity:.7;}
+  .audiocard .nm{color:#7dd3fc;}
+  .audiostate{background:var(--bg);border:1.5px solid var(--line2);border-radius:14px;
+     padding:24px 16px;text-align:center;margin:14px 0 10px;transition:all .25s ease;}
+  .audiostate[data-phase="run"]{background:linear-gradient(180deg, rgba(255,106,26,.20), var(--bg));
+     border-color:var(--accent);box-shadow:0 0 36px -8px var(--glow);}
+  .audiostate[data-phase="walk"]{background:linear-gradient(180deg, rgba(125,211,252,.14), var(--bg));
+     border-color:rgba(125,211,252,.6);}
+  .audiostate[data-phase="countdown"]{background:linear-gradient(180deg, rgba(251,191,36,.18), var(--bg));
+     border-color:var(--ok);box-shadow:0 0 28px -8px rgba(251,191,36,.4);}
+  .audiostate[data-phase="done"]{background:linear-gradient(180deg, rgba(52,211,153,.15), var(--bg));
+     border-color:var(--easy);}
+  .aslabel{font-family:var(--disp);font-weight:700;font-size:26px;text-transform:uppercase;
+     letter-spacing:.04em;line-height:1;color:var(--muted);}
+  .audiostate[data-phase="run"] .aslabel{color:var(--accent2);}
+  .audiostate[data-phase="walk"] .aslabel{color:#7dd3fc;}
+  .audiostate[data-phase="countdown"] .aslabel{color:var(--ok);}
+  .audiostate[data-phase="done"] .aslabel{color:var(--easy);}
+  .asremaining{font-family:var(--disp);font-weight:700;font-size:54px;color:var(--txt);
+     line-height:1;margin-top:8px;letter-spacing:.02em;}
+  .audiostate[data-phase="ready"] .asremaining{font-size:13px;color:var(--muted);
+     font-family:var(--mono);font-weight:500;letter-spacing:.1em;margin-top:6px;}
+  .phasebar{height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;
+     margin:10px 0;border:1px solid var(--line);}
+  .phasebar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));
+     transition:width .2s linear, background .25s ease;width:0%;}
+  .audioctrl{display:flex;align-items:center;gap:12px;margin-top:12px;}
+  .audiobtn{flex:1;border:none;border-radius:12px;padding:14px;font-family:var(--disp);
+     font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:16px;cursor:pointer;
+     background:linear-gradient(180deg,var(--accent),#e85a10);color:#fff;
+     box-shadow:0 8px 22px -10px var(--glow);transition:.15s;}
+  .audiobtn:active{transform:translateY(1px);}
+  .audiotime{font-family:var(--mono);font-size:13px;color:var(--muted);font-weight:600;white-space:nowrap;}
+  .audionote{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:8px;text-align:center;}
+  .audionote code{font-size:11px;background:var(--bg2);padding:1px 5px;border-radius:4px;color:var(--muted);}
 </style>
 </head>
 <body>
@@ -359,6 +397,11 @@ const PROGRAM = {
       warm:"6–8 min easy jog + leg swings, A-skips, then 3 × 20m strides building to fast.",
       cool:"Cooldown: 5 min easy + calf & hip stretch.",
       kind:"cardio",
+      audio:{
+        src:"audios/ShuttleIntervals_20m_Lvl8_50sRun_70sWalk.mp3",
+        title:"20m Shuttle Audio · Level 8",
+        rounds:8, prepTime:8, runTime:50, walkTime:70, totalTime:898
+      },
       ex:[
         { n:"Shuttle Intervals", s:"8 rounds", sets:8, rest:0, t:"50s hard / 70s easy", unit:"free",
           c:"20m shuttles. 50s at ~level-8 pace, 70s walk-back. <em>Plant & pivot tight on turns — don't overrun.</em> Even effort, don't redline.",
@@ -427,7 +470,49 @@ const PROGRAM = {
   ]
 };
 
-/* (Day 1 pre-fill removed — Week 1 now starts clean on restart) */
+/* ---------------- DAY 1 PRE-FILL (Mon Strength A — restart session) ---------------- */
+const PREFILL_D1 = {
+  ex: {
+    0: { sets:[
+        { v:"57.5", r:"5", feel:"Easy", done:true },
+        { v:"57.5", r:"5", feel:"Easy", done:true },
+        { v:"57.5", r:"5", feel:"Easy", done:true },
+        { v:"57.5", r:"5", feel:"Easy", done:true } ],
+      notes:"All 4 working sets clean at 57.5kg, all Easy. Next Strength A: push to 62.5kg." },
+    1: { sets:[
+        { v:"57.5", r:"5", feel:"Hard", done:true },
+        { v:"57.5", r:"5", feel:"Hard", done:true },
+        { v:"57.5", r:"5", feel:"Hard", done:true },
+        { v:"57.5", r:"5", feel:"Hard", done:true } ],
+      notes:"Heavy but doable — 4 working sets at 57.5kg held. Hold next time; aim for some sets to drift to OK before pushing 60." },
+    2: { sets:[
+        { v:"+2.5kg", r:"6", feel:"Easy", done:true },
+        { v:"+2.5kg", r:"6", feel:"Easy", done:true },
+        { v:"+5kg",   r:"6", feel:"OK",   done:true },
+        { v:"+5kg",   r:"6", feel:"Hard", done:true } ],
+      notes:"All controlled. Sensible 2× 2.5kg + 2× 5kg progression. Next: 4× 5kg target." },
+    3: { sets:[
+        { v:"55", r:"8", feel:"Easy", done:true },
+        { v:"55", r:"8", feel:"Easy", done:true },
+        { v:"55", r:"8", feel:"OK",   done:true } ],
+      notes:"Brief dizziness after last set — exhale on the way up, walk it off, eat 60-90 min before. 55kg clean → push 57.5 next time." },
+    4: { sets:[
+        { v:"24", r:"40m", feel:"OK", done:true },
+        { v:"24", r:"40m", feel:"OK", done:true },
+        { v:"24", r:"40m", feel:"OK", done:true } ],
+      notes:"All 3× 24kg/40m unbroken — big improvement vs last attempt. Next: 26kg or tighter rest." },
+    5: { sets:[
+        { v:"BW", r:"10", feel:"OK",   done:true },
+        { v:"BW", r:"10", feel:"OK",   done:true },
+        { v:"BW", r:"",   feel:"Hard", done:true } ],
+      notes:"No straps available — better than last week. Switching to V-ups / ab wheel next session to skip the grip issue." }
+  },
+  reflection: {
+    strongest: "Back squats clean — 57.5×4 all Easy.",
+    weakest:   "No specific limiter this session — all areas held up.",
+    overall:   "OK"
+  }
+};
 
 /* ---------------- STATE + STORAGE ---------------- */
 const SKEY = "ff_engine_tracker_v2";
@@ -444,7 +529,12 @@ function blankFor(){
       s.log[d.id].ex[i] = { sets: Array(e.sets).fill(0).map(()=>blankSet()), notes:"" };
     });
   });
-  // pre-fill removed — Week 1 starts clean
+  // pre-fill Day 1 with Monday Strength A session
+  Object.entries(PREFILL_D1.ex).forEach(([i,data])=>{
+    s.log.d1.ex[+i].sets = data.sets.map(x=>({...x}));
+    s.log.d1.ex[+i].notes = data.notes;
+  });
+  s.log.d1.reflection = {...PREFILL_D1.reflection};
   return s;
 }
 async function loadState(){
@@ -515,6 +605,113 @@ function refreshProgress(){
   });
 }
 
+/* ---------------- SHUTTLE AUDIO PLAYER ---------------- */
+function formatAudioTime(s){
+  s = Math.max(0, Math.floor(s||0));
+  const m = Math.floor(s/60); const r = s%60;
+  return `${m}:${String(r).padStart(2,'0')}`;
+}
+function getShuttleState(t, cfg){
+  const { prepTime, runTime, walkTime, rounds, totalTime } = cfg;
+  if(t >= totalTime) return { phase:'done', label:'COMPLETE', remaining:0, round:rounds, phaseProgress:1 };
+  if(t < prepTime - 3) return { phase:'ready', label:'GET READY', remaining:Math.max(1,Math.ceil(prepTime-t)), round:0, phaseProgress:0 };
+  if(t < prepTime) return { phase:'countdown', label:'STARTING', remaining:Math.max(1,Math.ceil(prepTime-t)), round:0, phaseProgress:1-(prepTime-t)/3 };
+  const cycleLen = runTime + walkTime;
+  const elapsed = t - prepTime;
+  const idx = Math.floor(elapsed / cycleLen);
+  const pos = elapsed % cycleLen;
+  const round = Math.min(idx+1, rounds);
+  if(pos < runTime){
+    return { phase:'run', label:`ROUND ${round} · RUN`, remaining:Math.max(1,Math.ceil(runTime-pos)), round, phaseProgress: pos/runTime };
+  }
+  return { phase:'walk', label:`ROUND ${round} · WALK`, remaining:Math.max(1,Math.ceil(cycleLen-pos)), round, phaseProgress:(pos-runTime)/walkTime };
+}
+function renderAudioCard(d, container){
+  const cfg = d.audio;
+  // Persistent global audio element (survives day-panel re-renders)
+  let audioEl = document.getElementById("globalShuttleAudio");
+  if(!audioEl){
+    audioEl = document.createElement("audio");
+    audioEl.id = "globalShuttleAudio";
+    audioEl.preload = "metadata";
+    const src = document.createElement("source");
+    src.src = cfg.src; src.type = "audio/mpeg";
+    audioEl.appendChild(src);
+    document.body.appendChild(audioEl);
+  }
+  const card = document.createElement("div");
+  card.className = "ex audiocard";
+  card.innerHTML = `
+    <div class="top">
+      <div class="nm">🔊 ${cfg.title}</div>
+      <div class="scheme">${cfg.rounds} rounds · ${formatAudioTime(cfg.totalTime)}</div>
+    </div>
+    <div class="cue">Place phone where you can hear it. Match each beep to a turn at the 20m line. <em>Double beep = phase change.</em></div>
+    <div class="audiostate" data-phase="ready" id="audioState">
+      <div class="aslabel" id="aslabel">PRESS PLAY</div>
+      <div class="asremaining" id="asremaining">${cfg.rounds} rounds · ${formatAudioTime(cfg.totalTime)}</div>
+    </div>
+    <div class="phasebar"><i id="phasebar"></i></div>
+    <div class="audioctrl">
+      <button id="audioPlay" class="audiobtn">▶ PLAY</button>
+      <span class="audiotime" id="audiotime">0:00 / ${formatAudioTime(cfg.totalTime)}</span>
+    </div>
+    <div class="audionote">File: <code>${cfg.src}</code></div>
+  `;
+  container.appendChild(card);
+  const playBtn = card.querySelector("#audioPlay");
+  const stateEl = card.querySelector("#audioState");
+  const labelEl = card.querySelector("#aslabel");
+  const remainingEl = card.querySelector("#asremaining");
+  const phaseBarEl = card.querySelector("#phasebar");
+  const timeEl = card.querySelector("#audiotime");
+  const noteEl = card.querySelector(".audionote");
+  let intervalId = null;
+  function update(){
+    if(audioEl.currentTime === 0 && audioEl.paused){
+      stateEl.dataset.phase = 'ready';
+      labelEl.textContent = 'PRESS PLAY';
+      remainingEl.textContent = `${cfg.rounds} rounds · ${formatAudioTime(cfg.totalTime)}`;
+      phaseBarEl.style.width = '0%';
+      timeEl.textContent = `0:00 / ${formatAudioTime(cfg.totalTime)}`;
+      return;
+    }
+    const s = getShuttleState(audioEl.currentTime, cfg);
+    stateEl.dataset.phase = s.phase;
+    labelEl.textContent = s.label;
+    remainingEl.textContent = s.remaining > 0 ? `${s.remaining}s` : (s.phase === 'done' ? '✓' : '--');
+    phaseBarEl.style.width = (s.phaseProgress * 100) + '%';
+    phaseBarEl.style.background = s.phase === 'walk'
+      ? 'linear-gradient(90deg,#7dd3fc,#3b82f6)'
+      : 'linear-gradient(90deg,var(--accent),var(--accent2))';
+    timeEl.textContent = `${formatAudioTime(audioEl.currentTime)} / ${formatAudioTime(cfg.totalTime)}`;
+  }
+  function stopInt(){ if(intervalId){ clearInterval(intervalId); intervalId=null; } }
+  function startInt(){ stopInt(); intervalId = setInterval(update, 200); }
+  function showError(){
+    labelEl.textContent = 'AUDIO NOT FOUND';
+    remainingEl.textContent = '!';
+    stateEl.dataset.phase = 'ready';
+    noteEl.innerHTML = `<span style="color:var(--hard);">Place <code>${cfg.src.split('/').pop()}</code> in <code>audios/</code> folder next to this HTML file.</span>`;
+  }
+  playBtn.onclick = () => {
+    if(audioEl.paused || audioEl.ended){
+      if(audioEl.ended) audioEl.currentTime = 0;
+      const p = audioEl.play();
+      if(p && p.catch) p.catch(showError);
+    } else { audioEl.pause(); }
+  };
+  audioEl.onplay = () => { playBtn.textContent = '⏸ PAUSE'; startInt(); update(); };
+  audioEl.onpause = () => { if(audioEl.ended) return; playBtn.textContent = '▶ PLAY'; stopInt(); update(); };
+  audioEl.onended = () => { playBtn.textContent = '▶ RESTART'; stopInt(); update(); };
+  audioEl.onerror = showError;
+  // Sync UI to current audio state (in case audio is already playing across re-renders)
+  if(audioEl.ended) playBtn.textContent = '▶ RESTART';
+  else if(!audioEl.paused){ playBtn.textContent = '⏸ PAUSE'; startInt(); }
+  else playBtn.textContent = '▶ PLAY';
+  update();
+}
+
 /* ---------------- RENDER ---------------- */
 function renderTabs(){
   const c=document.getElementById("tabs"); c.innerHTML="";
@@ -554,6 +751,8 @@ function renderDay(d){
   }
 
   if(d.warm){ const w=document.createElement("div"); w.className="wu"; w.innerHTML=`<b>Day warm-up</b>${d.warm}`; p.appendChild(w); }
+
+  if(d.audio) renderAudioCard(d, p);
 
   d.ex.forEach((e,i)=>{
     const L=state.log[d.id].ex[i];
