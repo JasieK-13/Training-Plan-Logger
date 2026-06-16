@@ -394,7 +394,7 @@ const PROGRAM = {
           last:"55kg × 3×8 (Easy/Easy/OK) — dizzy after",
           warm:"Bar × 8  →  45kg × 5  →  working sets",
           c:"Hinge, soft knees, neutral spine. RPE 7. <em>EXHALE on the way up (don't hold breath), and WALK after each set — don't sit. Fixes the dizziness.</em>" },
-        { n:"Farmer Carry", s:"3 × 40 m", sets:3, rest:90, t:"26 kg / hand", unit:"kg/hand",
+        { n:"Farmer Carry", s:"3 × 40 m", sets:3, rest:90, t:"26 kg / hand", unit:"kg/hand", repPH:"m",
           last:"24kg × 3×40m — unbroken ✓",
           warm:"Light DBs × 20m to wake up the grip",
           c:"Tall posture, crush handles. <em>Up to 26kg. Goal still 40m UNBROKEN — if grip slips before the line, that's your new edge, hold 26 till clean.</em>" },
@@ -448,7 +448,7 @@ const PROGRAM = {
           last:"10kg DBs × 3×8/leg — left weaker",
           warm:"Bodyweight × 8/leg (weaker side first)",
           c:"<em>Up to 12kg. Start with the WEAKER (left) leg, then match reps on the right.</em> Closing the L/R gap is the whole point." },
-        { n:"Sled Push", s:"5 × 20 m", sets:5, rest:90, t:"60kg set 1 → 70kg sets 2–5", unit:"kg",
+        { n:"Sled Push", s:"5 × 20 m", sets:5, rest:90, t:"60kg set 1 → 70kg sets 2–5", unit:"kg", repPH:"sec/20m",
           last:"+60kg, ~10–11s/20m (could do more)",
           warm:"Empty sled × 20m walk + 1 light push",
           c:"Log seconds per 20m in the reps box. <em>Push to 70kg — aiming for 12–15s/length where the cardio cost shows. FIX TRACTION: tighter shoes, or go socks/barefoot (no soft running shoes).</em>" },
@@ -492,7 +492,49 @@ const PROGRAM = {
   ]
 };
 
-/* (Week 2 prefill removed — Week 3 starts clean) */
+/* ---------------- DAY 1 PRE-FILL (Mon Strength A — Week 3) ---------------- */
+const PREFILL_D1 = {
+  ex: {
+    0: { sets:[
+        { v:"60",   r:"5", feel:"Easy", done:true },
+        { v:"62.5", r:"5", feel:"Easy", done:true },
+        { v:"62.5", r:"5", feel:"Easy", done:true },
+        { v:"62.5", r:"5", feel:"Easy", done:true } ],
+      notes:"60 warm-in, 62.5×3 all Easy. Flying. Next: 65–67.5kg." },
+    1: { sets:[
+        { v:"57.5", r:"5", feel:"Hard", done:true },
+        { v:"57.5", r:"5", feel:"Hard", done:true },
+        { v:"57.5", r:"5", feel:"Hard", done:true },
+        { v:"57.5", r:"5", feel:"Hard", done:true } ],
+      notes:"2nd week at 57.5, still all Hard. Hold again — bench is your slow mover (pull-dominant). It'll come." },
+    2: { sets:[
+        { v:"+5kg", r:"6", feel:"Easy", done:true },
+        { v:"+5kg", r:"6", feel:"Easy", done:true },
+        { v:"+5kg", r:"6", feel:"Easy", done:true },
+        { v:"+5kg", r:"6", feel:"OK",   done:true } ],
+      notes:"+5kg now easy. Next step: 5kg×2 + 7.5kg×2." },
+    3: { sets:[
+        { v:"57.5", r:"8", feel:"OK",   done:true },
+        { v:"57.5", r:"8", feel:"Hard", done:true },
+        { v:"57.5", r:"8", feel:"OK",   done:true } ],
+      notes:"Dizziness easing — breath work helping. Hold 57.5, keep exhaling up + walking after." },
+    4: { sets:[
+        { v:"26", r:"40", feel:"Easy", done:true },
+        { v:"26", r:"40", feel:"OK",   done:true },
+        { v:"26", r:"31", feel:"OK",   done:true } ],
+      notes:"Grip gave at 31m on set 3. 26kg is your edge — HOLD it until 3×40m unbroken. (Carry-back ~20m is bonus load.)" },
+    5: { sets:[
+        { v:"BW", r:"12", feel:"Easy", done:true },
+        { v:"BW", r:"12", feel:"OK",   done:true },
+        { v:"BW", r:"12", feel:"OK",   done:true } ],
+      notes:"Did crunches. Prefer ab wheel / V-ups / leg raises — bigger range, more carryover." }
+  },
+  reflection: {
+    strongest: "Squats — 62.5 all Easy, clean jump.",
+    weakest:   "Grip (farmer carry 31m) + bench still Hard.",
+    overall:   "Easy"
+  }
+};
 
 /* ---------------- STATE + STORAGE ---------------- */
 const SKEY = "ff_engine_tracker_v3";
@@ -509,7 +551,12 @@ function blankFor(){
       s.log[d.id].ex[i] = { sets: Array(e.sets).fill(0).map(()=>blankSet()), notes:"" };
     });
   });
-  // Week 3 starts clean — no prefill
+  // pre-fill Day 1 with Monday (Week 3) session
+  Object.entries(PREFILL_D1.ex).forEach(([i,data])=>{
+    s.log.d1.ex[+i].sets = data.sets.map(x=>({...x}));
+    s.log.d1.ex[+i].notes = data.notes;
+  });
+  s.log.d1.reflection = {...PREFILL_D1.reflection};
   return s;
 }
 async function loadState(){
@@ -746,10 +793,11 @@ function renderDay(d){
     for(let k=0;k<e.sets;k++){
       const sv=L.sets[k];
       const ph = isCardio ? (e.logPH||"log result") : (e.unit==="kg" ? "kg" : (e.unit==="reps"?"reps":(e.unit==="sec"?"sec":(e.unit==="kg/hand"?"kg/hand":"value"))));
+      const repPH = e.repPH || (e.logType==="cardio" ? "" : "reps");
       h+=`<div class="setrow ${sv.done?'done':''}" data-k="${k}">
         <div class="setnum">${k+1}</div>
         <input class="setval wval" data-field="v" value="${esc(sv.v)}" placeholder="${ph}">
-        <input class="setval rval" data-field="r" value="${esc(sv.r)}" placeholder="reps" inputmode="numeric">
+        <input class="setval rval" data-field="r" value="${esc(sv.r)}" placeholder="${repPH}" inputmode="numeric">
         <div class="minifeel">
           <button class="mf ${sv.feel==='Easy'?'on':''}" data-f="Easy">E</button>
           <button class="mf ${sv.feel==='OK'?'on':''}" data-f="OK">O</button>
@@ -898,6 +946,68 @@ function renderStats(){
       Next real number = bleep test (Tue, if stitch-free). Engine looks well past 7.1 — you cruised 8 shuttle rounds.</div>`;
   p.appendChild(cardioCard);
 
+  // ---- STANDARDS vs YOU ----
+  const stdHead=document.createElement("div"); stdHead.className="ex statsCard";
+  stdHead.innerHTML=`<div class="top"><div class="nm">🎯 Standards vs You</div></div>
+    <div class="cue">How you stack up against entry standards. <em>Numbers are official-source minimums (vary by role/region — confirm with the live recruitment page).</em> Aim to EXCEED, not scrape.</div>`;
+  p.appendChild(stdHead);
+
+  const STANDARDS = [
+    { metric:"20m Bleep Test", you:"~7.1 official · ~8 in shuttles (RETEST PENDING)", youState:"close",
+      rows:[
+        { who:"UK Firefighter (Bucks)", req:"8.6", note:"+ ladder lift, 33kg carry over 25m" },
+        { who:"UK Firefighter (most services)", req:"8.8", note:"run test past min to show buffer" },
+        { who:"UK Army — Officer", req:"8.7", note:"MSFT route (officers only)" },
+        { who:"UK Army — Soldier", req:"2km run", note:"bleep DROPPED 26 Nov 2025 → see run below" },
+        { who:"UK Police", req:"5.4", note:"(15m shuttle — easier)" },
+        { who:"Polish Firefighter (PSP)", req:"beep test req.", note:"level varies by unit/region" }
+      ]},
+    { metric:"2km Run (after 800m warmup)", you:"NOT TESTED — do a time trial", youState:"untested",
+      rows:[
+        { who:"UK Army — entry (slowest)", req:"≤ 11:15", note:"lowest adult standard" },
+        { who:"UK Army — Infantry/Para", req:"≤ 10:15", note:"toughest roles, quicker still" },
+        { who:"Strong tactical target", req:"~9:00–9:30", note:"comfortable buffer" }
+      ]},
+    { metric:"Polish Run Standards", you:"NOT TESTED — strong pull-ups already bank points", youState:"untested",
+      rows:[
+        { who:"Polish FF (PSP) — direct entry", req:"1000m ≤ 3:29 (M)", note:"+ Harvard step test, 50m swim < 60s" },
+        { who:"Polish Army (4-event, scored)", req:"3000m timed", note:"+ pull-ups, 2min sit-ups, 10×10m shuttle" },
+        { who:"Your 5km goal", req:"sub-20:00", note:"your own north-star benchmark" }
+      ]},
+    { metric:"Strict Pull-ups (max)", you:"~12–15 est (you rep 4×6 at +5kg)", youState:"met",
+      rows:[
+        { who:"Polish Army / FF", req:"counted & scored", note:"full elbow extension each rep" },
+        { who:"Polish SF (GROM)", req:"high standard", note:"+ rope climb, 2min sit-ups" },
+        { who:"Your long-term goal", req:"15–20+", note:"strong tactical level" }
+      ]},
+    { metric:"FF Practical Strength", you:"Likely sufficient (farmer 26kg/hand, squat 62.5)", youState:"met",
+      rows:[
+        { who:"UK FF Ladder Lift", req:"build to ~30kg to head height", note:"technique test" },
+        { who:"UK FF Equipment Carry", req:"33kg barbell + hoses, 25m", note:"against the clock" }
+      ]}
+  ];
+  STANDARDS.forEach(s=>{
+    const c=document.createElement("div"); c.className="ex statsCard";
+    let h=`<div class="top"><div class="nm" style="font-size:15px;">${s.metric}</div></div>`;
+    const stCls = s.youState==="met"?"easy":(s.youState==="close"?"ok":"hard");
+    h+=`<div class="pellets" style="margin-top:8px;"><span class="pellet ${stCls}" style="font-size:12px;">YOU: <b>${s.you}</b></span></div>`;
+    h+=`<div style="margin-top:10px;display:flex;flex-direction:column;gap:6px;">`;
+    s.rows.forEach(r=>{
+      h+=`<div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-bottom:1px dashed var(--line);padding-bottom:5px;">
+        <span style="font-family:var(--body);font-size:12.5px;color:#c6cfdf;">${r.who}</span>
+        <span style="font-family:var(--mono);font-size:12.5px;color:var(--accent2);font-weight:700;white-space:nowrap;">${r.req}</span>
+      </div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--dim);margin-top:-3px;">${r.note}</div>`;
+    });
+    h+=`</div>`;
+    c.innerHTML=h;
+    p.appendChild(c);
+  });
+
+  const stdNote=document.createElement("div"); stdNote.className="wu"; stdNote.style.marginTop="12px";
+  stdNote.innerHTML=`<b>Priority read</b>The bleep test is your gate for UK Firefighter AND the alternate route for UK Army — one number unlocks both. Your strength already clears most practical/strength standards. <em>Next milestone: a clean, properly-measured max bleep test. Then a 2km time trial so we can fill in the run row.</em>`;
+  p.appendChild(stdNote);
+
   const divider=document.createElement("div");
   divider.style.cssText="font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--dim);text-transform:uppercase;margin:18px 0 4px;text-align:center;";
   divider.textContent="— this week's logged sets —";
@@ -965,31 +1075,87 @@ function sparkline(points){
   </svg>`;
 }
 
-/* ---------------- REST TIMER ---------------- */
-let tInt=null, tLeft=0, tName="";
+/* ---------------- REST TIMER (timestamp-based + background notify) ---------------- */
+let tInt=null, tEndTime=0, tName="", tNotifyTO=null, tFired=false, tRunning=false;
+let notifPermAsked=false;
+
+function remainingSec(){ return Math.round((tEndTime - Date.now())/1000); }
 function fmt(s){ const sign=s<0?'+':''; const a=Math.abs(s); const m=Math.floor(a/60), x=a%60; return `${sign}${m}:${String(x).padStart(2,'0')}`; }
 function paintTimer(){
-  const t=fmt(tLeft);
+  const left = remainingSec();
+  const t=fmt(left);
   document.getElementById("tclock").textContent=t;
   document.getElementById("tfclock").textContent=t;
-  const zero = tLeft<=0;
+  const zero = left<=0;
   document.getElementById("tclock").classList.toggle("zero",zero);
   document.getElementById("tfclock").classList.toggle("zero",zero);
 }
+function beep(){
+  try{
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if(!Ctx) return;
+    const ctx = new Ctx();
+    const now = ctx.currentTime;
+    [0,0.18,0.36].forEach((off)=>{
+      const o = ctx.createOscillator(); const g = ctx.createGain();
+      o.type="sine"; o.frequency.value=880;
+      o.connect(g); g.connect(ctx.destination);
+      g.gain.setValueAtTime(0.0001, now+off);
+      g.gain.exponentialRampToValueAtTime(0.4, now+off+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, now+off+0.15);
+      o.start(now+off); o.stop(now+off+0.16);
+    });
+    setTimeout(()=>{ try{ctx.close();}catch(e){} }, 700);
+  }catch(e){}
+}
+function fireComplete(){
+  if(tFired) return; tFired=true;
+  try{ if(navigator.vibrate) navigator.vibrate([200,100,200,100,300]); }catch(e){}
+  beep();
+  try{
+    if("Notification" in window && Notification.permission==="granted"){
+      const n = new Notification("⏱ Rest complete", {
+        body:(tName?tName+" — ":"")+"Time for your next set.",
+        tag:"ff-rest-timer", renotify:true, requireInteraction:false,
+        vibrate:[200,100,200]
+      });
+      n.onclick = ()=>{ window.focus(); n.close(); };
+      setTimeout(()=>{ try{n.close();}catch(e){} }, 12000);
+    }
+  }catch(e){}
+  paintTimer();
+}
+function askNotifPermission(){
+  if(notifPermAsked) return;
+  notifPermAsked=true;
+  try{
+    if("Notification" in window && Notification.permission==="default"){
+      Notification.requestPermission().catch(()=>{});
+    }
+  }catch(e){}
+}
 function startTimer(sec,name){
-  tLeft=sec; tName=name||"";
+  askNotifPermission();
+  tName=name||""; tFired=false; tRunning=true;
+  tEndTime = Date.now() + sec*1000;
   document.getElementById("tlabel").textContent="REST · "+tName;
   document.getElementById("tflabel").textContent="REST · "+tName;
   openBar();
   paintTimer();
   if(tInt) clearInterval(tInt);
-  tInt=setInterval(()=>{
-    tLeft--; paintTimer();
-    if(tLeft===0){ try{ if(navigator.vibrate) navigator.vibrate([180,100,180,100,260]); }catch(e){} }
-  },1000);
+  tInt=setInterval(paintTimer,250);
+  scheduleNotify();
+}
+function scheduleNotify(){
+  if(tNotifyTO) clearTimeout(tNotifyTO);
+  const ms = tEndTime - Date.now();
+  if(ms<=0){ fireComplete(); return; }
+  tNotifyTO = setTimeout(fireComplete, ms);
 }
 function stopTimer(){
   if(tInt) clearInterval(tInt); tInt=null;
+  if(tNotifyTO) clearTimeout(tNotifyTO); tNotifyTO=null;
+  tRunning=false; tFired=false;
   document.getElementById("timerbar").classList.remove("show");
   document.getElementById("timerfull").classList.remove("show");
 }
@@ -1001,13 +1167,20 @@ function openBar(){
   document.getElementById("timerfull").classList.remove("show");
   document.getElementById("timerbar").classList.add("show");
 }
+// Re-sync when app returns to foreground (covers throttled background timers)
+document.addEventListener("visibilitychange", ()=>{
+  if(document.visibilityState==="visible" && tRunning){
+    paintTimer();
+    if(remainingSec()<=0 && !tFired) fireComplete();
+  }
+});
 document.getElementById("tstop").onclick=stopTimer;
 document.getElementById("tfstop").onclick=stopTimer;
 document.getElementById("tfclose").onclick=stopTimer;
 document.getElementById("tfmin").onclick=openBar;
 document.getElementById("timerbar").onclick=openFull;
-document.getElementById("tfminus").onclick=(e)=>{e.stopPropagation(); tLeft=Math.max(0,tLeft-15); paintTimer();};
-document.getElementById("tfplus").onclick=(e)=>{e.stopPropagation(); tLeft+=15; paintTimer();};
+document.getElementById("tfminus").onclick=(e)=>{e.stopPropagation(); tEndTime=Math.max(Date.now(), tEndTime-15000); tFired=false; paintTimer(); scheduleNotify();};
+document.getElementById("tfplus").onclick=(e)=>{e.stopPropagation(); tEndTime+=15000; tFired=false; paintTimer(); scheduleNotify();};
 
 /* ---------------- COPY LOG ---------------- */
 function openLog(d){
