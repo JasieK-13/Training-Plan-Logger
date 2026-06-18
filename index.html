@@ -136,6 +136,10 @@
      font-family:var(--body);font-size:13px;padding:9px 11px;outline:none;}
   .notes input:focus{border-color:var(--accent);}
   .notes input::placeholder{color:var(--dim);}
+  .notes.nba{display:flex;align-items:center;gap:8px;margin-top:8px;}
+  .notes.nba .nbalbl{flex:0 0 auto;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
+     text-transform:uppercase;color:#7dd3fc;width:46px;}
+  .notes.nba input{border-color:rgba(125,211,252,.25);}
 
   /* REFLECTION */
   .reflect{background:var(--card);border:1px solid var(--accent2);border-radius:14px;padding:14px;margin:14px 0;position:relative;}
@@ -548,7 +552,7 @@ function blankFor(){
     if(d.kind==="stats") return;
     s.log[d.id] = { rest:false, reflection:{ strongest:"", weakest:"", overall:"" }, ex:{} };
     (d.ex||[]).forEach((e,i)=>{
-      s.log[d.id].ex[i] = { sets: Array(e.sets).fill(0).map(()=>blankSet()), notes:"" };
+      s.log[d.id].ex[i] = { sets: Array(e.sets).fill(0).map(()=>blankSet()), notes:"", nb:"", na:"" };
     });
   });
   // pre-fill Day 1 with Monday (Week 3) session
@@ -579,6 +583,8 @@ async function loadState(){
       Object.keys(base.log[did].ex).forEach(i=>{
         const x = L.ex && L.ex[i]; if(!x) return;
         base.log[did].ex[i].notes = x.notes || base.log[did].ex[i].notes;
+        base.log[did].ex[i].nb = x.nb || base.log[did].ex[i].nb;
+        base.log[did].ex[i].na = x.na || base.log[did].ex[i].na;
         if(Array.isArray(x.sets)){
           x.sets.forEach((sx,k)=>{
             if(!base.log[did].ex[i].sets[k]) return;
@@ -807,7 +813,13 @@ function renderDay(d){
       </div>`;
     }
     h+=`</div>`;
-    h+=`<div class="notes"><input data-field="notes" value="${esc(L.notes)}" placeholder="notes (optional) — e.g. left side weaker, last rep grindy"></div>`;
+    if(e.logType==="cardio"){
+      h+=`<div class="notes nba"><span class="nbalbl">Before</span><input data-field="nb" value="${esc(L.nb)}" placeholder="how you felt going in — energy, legs, fuel, nerves"></div>`;
+      h+=`<div class="notes nba"><span class="nbalbl">After</span><input data-field="na" value="${esc(L.na)}" placeholder="how you felt after — breathing, where you failed, fuel"></div>`;
+      if(L.notes){ h+=`<div class="notes"><input data-field="notes" value="${esc(L.notes)}" placeholder="other notes"></div>`; }
+    } else {
+      h+=`<div class="notes"><input data-field="notes" value="${esc(L.notes)}" placeholder="notes (optional) — e.g. left side weaker, last rep grindy"></div>`;
+    }
     card.innerHTML=h;
 
     // listeners
@@ -834,7 +846,9 @@ function renderDay(d){
         if(L.sets[k].done && e.rest>0) startTimer(e.rest, e.n);
       };
     });
-    card.querySelector('input[data-field="notes"]').oninput=(ev)=>{ L.notes=ev.target.value; saveState(); };
+    card.querySelectorAll('.notes input[data-field]').forEach(inp=>{
+      inp.oninput=(ev)=>{ L[inp.dataset.field]=ev.target.value; saveState(); };
+    });
     const rb=card.querySelector(".restbtn");
     if(rb) rb.onclick=()=>startTimer(+rb.dataset.rest, rb.dataset.name);
     p.appendChild(card);
@@ -1200,6 +1214,8 @@ function openLog(d){
         if(sv.done) bits.push("✓");
         lines.push("    "+bits.join("  ·  "));
       });
+      if(L.nb) lines.push(`    before: ${L.nb}`);
+      if(L.na) lines.push(`    after: ${L.na}`);
       if(L.notes) lines.push(`    note: ${L.notes}`);
     });
     const R=state.log[d.id].reflection;
