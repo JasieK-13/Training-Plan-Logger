@@ -72,6 +72,18 @@
   .wu{margin:12px 0;border:1px dashed var(--line2);border-radius:10px;padding:10px 12px;font-size:12px;color:#c2cce0;line-height:1.5;}
   .wu b{color:var(--accent2);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:3px;}
 
+  /* SESSION ETA BAR */
+  .sessionbar{background:linear-gradient(180deg, rgba(255,171,46,.06), var(--card));
+     border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin:11px 0;}
+  .sbtop{display:flex;align-items:baseline;gap:10px;margin-bottom:7px;}
+  .sbpct{font-family:var(--disp);font-weight:700;font-size:22px;color:var(--accent2);line-height:1;}
+  .sbsets{font-family:var(--mono);font-size:11px;color:var(--muted);}
+  .sbtotal{font-family:var(--mono);font-size:11px;color:var(--muted);margin-left:auto;}
+  .sbbar{height:7px;border-radius:99px;background:var(--bg3);overflow:hidden;border:1px solid var(--line);}
+  .sbbar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s ease;width:0%;}
+  .sbfinish{font-family:var(--mono);font-size:11px;color:#aeb9cc;margin-top:7px;line-height:1.4;}
+  .sbfinish b{color:var(--accent2);font-weight:700;}
+
   /* EXERCISE CARD */
   .ex{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:11px 0;position:relative;overflow:hidden;}
   .ex::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--accent),transparent);opacity:.5;}
@@ -418,11 +430,11 @@ const PROGRAM = {
         rounds:8, prepTime:8, runTime:50, walkTime:70, totalTime:898
       },
       ex:[
-        { n:"Full Bleep Test (primary)", s:"to failure", sets:1, rest:0, t:"Measured 20m · daytime · fed 90min before", unit:"free",
+        { n:"Full Bleep Test (primary)", s:"to failure", sets:1, rest:0, estSec:540, t:"Measured 20m · daytime · fed 90min before", unit:"free",
           last:"8 shuttle rounds, mostly Easy (~level 8)",
           c:"Standard progressive bleep test, run to failure, record the level. <em>MEASURE the 20m properly (tape, or 20 strides) and mark both ends.</em> Use a standard bleep-test app (starts level 1 — NOT the level-8 shuttle audio). <em>ONLY do this if the stitch is gone and you feel fresh.</em>",
           logType:"cardio", logPH:"e.g. reached level 9.4" },
-        { n:"OR — 8× Shuttle (fallback)", s:"8 rounds", sets:8, rest:0, t:"50s hard / 70s easy", unit:"free",
+        { n:"OR — 8× Shuttle (fallback)", s:"8 rounds", sets:8, rest:0, estSec:898, t:"50s hard / 70s easy", unit:"free",
           last:"Distance was ~slightly short last time",
           c:"If the stitch flares or you're not fresh: do the 8-round shuttle set instead (use the audio above) and we benchmark next week. Tight turns, even pacing.",
           logType:"cardio", logPH:"e.g. round 1 OK, pace fine" }
@@ -467,11 +479,11 @@ const PROGRAM = {
       cool:"Cooldown: 3 min walk + light stretch.",
       kind:"cardio",
       ex:[
-        { n:"Easy Continuous Run", s:"30 min", sets:1, rest:0, t:"Conversational · SLOWER not faster", unit:"free",
+        { n:"Easy Continuous Run", s:"30 min", sets:1, rest:0, estSec:1980, t:"Conversational · SLOWER not faster", unit:"free",
           last:"Missed last week",
           c:"<em>Must feel easy — full sentences, could drop to a walk without changing speed.</em> If avg HR creeps above 145, slow down. <em>Stitch prevention: nothing solid within 2h, sip don't chug, belly-breathe (belly out on inhale).</em>",
           logType:"cardio", logPH:"e.g. 4.0km / 30min / felt easy" },
-        { n:"Dead Hangs (finisher)", s:"3 × max", sets:3, rest:60, t:"BW", unit:"sec",
+        { n:"Dead Hangs (finisher)", s:"3 × max", sets:3, rest:60, estSec:300, t:"BW", unit:"sec",
           last:"Skipped last week",
           c:"Hang for max time, relaxed shoulders. Log seconds per hang. Cheap grip work — don't skip it again.",
           logType:"cardio", logPH:"e.g. 55s" }
@@ -482,7 +494,7 @@ const PROGRAM = {
       cool:"Cooldown: 5–10 min easy jog + stretch.",
       kind:"cardio",
       ex:[
-        { n:"400m Intervals", s:"6 × 400 m", sets:6, rest:0, t:"EVEN splits ~1:50–2:00 · 90s+ rest", unit:"free",
+        { n:"400m Intervals", s:"6 × 400 m", sets:6, rest:0, estSec:1500, t:"EVEN splits ~1:50–2:00 · 90s+ rest", unit:"free",
           last:"1:45–1:59 clean (sets 1–3), stitch wrecked 4–6",
           c:"<em>This week's goal is a CLEAN, stitch-free 6 — not a fast 6.</em> Don't chase 1:45 if it costs the back half. Belly-breathe; exhale as your RIGHT foot lands. <em>If a stitch doesn't clear in 60s of slowing — STOP the session.</em> Same loop you measured.",
           logType:"cardio", logPH:"e.g. 1:55" }
@@ -496,47 +508,93 @@ const PROGRAM = {
   ]
 };
 
-/* ---------------- DAY 1 PRE-FILL (Mon Strength A — Week 3) ---------------- */
-const PREFILL_D1 = {
-  ex: {
-    0: { sets:[
+/* ---------------- WEEK 3 SESSION PREFILLS ---------------- */
+const WEEK3_PREFILLS = {
+  d1: {
+    sessionStart: null,
+    reflection:{ strongest:"Squats — 62.5 all Easy, clean jump.", weakest:"Grip (farmer carry 31m) + bench still Hard.", overall:"Easy" },
+    ex:{
+      0:{ nb:"", na:"", notes:"60 warm-in, 62.5×3 all Easy. Flying. Next: 65kg.", sets:[
         { v:"60",   r:"5", feel:"Easy", done:true },
         { v:"62.5", r:"5", feel:"Easy", done:true },
         { v:"62.5", r:"5", feel:"Easy", done:true },
-        { v:"62.5", r:"5", feel:"Easy", done:true } ],
-      notes:"60 warm-in, 62.5×3 all Easy. Flying. Next: 65–67.5kg." },
-    1: { sets:[
+        { v:"62.5", r:"5", feel:"Easy", done:true }]},
+      1:{ nb:"", na:"", notes:"2nd week at 57.5, still all Hard. Hold — bench lags pull strength. It'll come.", sets:[
         { v:"57.5", r:"5", feel:"Hard", done:true },
         { v:"57.5", r:"5", feel:"Hard", done:true },
         { v:"57.5", r:"5", feel:"Hard", done:true },
-        { v:"57.5", r:"5", feel:"Hard", done:true } ],
-      notes:"2nd week at 57.5, still all Hard. Hold again — bench is your slow mover (pull-dominant). It'll come." },
-    2: { sets:[
+        { v:"57.5", r:"5", feel:"Hard", done:true }]},
+      2:{ nb:"", na:"", notes:"+5kg now easy across all 4. Next: 5kg×2 + 7.5kg×2.", sets:[
         { v:"+5kg", r:"6", feel:"Easy", done:true },
         { v:"+5kg", r:"6", feel:"Easy", done:true },
         { v:"+5kg", r:"6", feel:"Easy", done:true },
-        { v:"+5kg", r:"6", feel:"OK",   done:true } ],
-      notes:"+5kg now easy. Next step: 5kg×2 + 7.5kg×2." },
-    3: { sets:[
+        { v:"+5kg", r:"6", feel:"OK",   done:true }]},
+      3:{ nb:"", na:"", notes:"Dizziness easing — breath work helping. Hold 57.5, exhale up + walk after sets.", sets:[
         { v:"57.5", r:"8", feel:"OK",   done:true },
         { v:"57.5", r:"8", feel:"Hard", done:true },
-        { v:"57.5", r:"8", feel:"OK",   done:true } ],
-      notes:"Dizziness easing — breath work helping. Hold 57.5, keep exhaling up + walking after." },
-    4: { sets:[
+        { v:"57.5", r:"8", feel:"OK",   done:true }]},
+      4:{ nb:"", na:"", notes:"Grip gave at 31m on set 3. Hold 26kg until 3×40m unbroken.", sets:[
         { v:"26", r:"40", feel:"Easy", done:true },
         { v:"26", r:"40", feel:"OK",   done:true },
-        { v:"26", r:"31", feel:"OK",   done:true } ],
-      notes:"Grip gave at 31m on set 3. 26kg is your edge — HOLD it until 3×40m unbroken. (Carry-back ~20m is bonus load.)" },
-    5: { sets:[
+        { v:"26", r:"31", feel:"OK",   done:true }]},
+      5:{ nb:"", na:"", notes:"Did crunches — switch to V-ups or ab wheel next time for better range.", sets:[
         { v:"BW", r:"12", feel:"Easy", done:true },
         { v:"BW", r:"12", feel:"OK",   done:true },
-        { v:"BW", r:"12", feel:"OK",   done:true } ],
-      notes:"Did crunches. Prefer ab wheel / V-ups / leg raises — bigger range, more carryover." }
+        { v:"BW", r:"12", feel:"OK",   done:true }]}
+    }
   },
-  reflection: {
-    strongest: "Squats — 62.5 all Easy, clean jump.",
-    weakest:   "Grip (farmer carry 31m) + bench still Hard.",
-    overall:   "Easy"
+  d2: {
+    sessionStart: null,
+    reflection:{ strongest:"No stitch — fueling/breathing fixes worked.", weakest:"Legs sore from Mon leg day — impacted score.", overall:"Hard" },
+    ex:{
+      0:{ nb:"Felt slightly tired, legs sore from Monday (back/lower glutes). Did stretches. Feeling hopeful to beat score.", na:"Had to lay down after. Hungry from level 5 to end. Missed beep 3 times near end. Breathing painful towards end. Disappointed with score.", notes:"20m properly measured and confirmed. No stitch. Score: 6.3. Test done on tired legs day after heavy leg day.", sets:[
+        { v:"6.3", r:"", feel:"Hard", done:true }]},
+      1:{ nb:"", na:"", notes:"Full bleep test done — fallback not used.", sets:[
+        { v:"", r:"", feel:"", done:false },
+        { v:"", r:"", feel:"", done:false },
+        { v:"", r:"", feel:"", done:false },
+        { v:"", r:"", feel:"", done:false },
+        { v:"", r:"", feel:"", done:false },
+        { v:"", r:"", feel:"", done:false },
+        { v:"", r:"", feel:"", done:false },
+        { v:"", r:"", feel:"", done:false }]}
+    }
+  },
+  d3:{ sessionStart:null, rest:true, reflection:{ strongest:"", weakest:"", overall:"" }, ex:{} },
+  d4: {
+    sessionStart: null,
+    reflection:{ strongest:"Sled 70kg all 5 sets + pull-ups flying.", weakest:"Wrist strain (front rack), OHP disrupted, rear-delt flies skipped.", overall:"Hard" },
+    ex:{
+      0:{ nb:"", na:"", notes:"S1 front squat 47.5 easy. S2 wrist strained — swapped to back squat 62.5. Front squat paused until wrist heals.", sets:[
+        { v:"47.5", r:"5", feel:"Easy", done:true },
+        { v:"62.5", r:"5", feel:"OK",   done:true },
+        { v:"62.5", r:"5", feel:"OK",   done:true },
+        { v:"62.5", r:"5", feel:"OK",   done:true }]},
+      1:{ nb:"", na:"", notes:"35kg too heavy S1 (3 reps). Dropped to 30, then 32.5×6. Real working weight = 32.5kg. Wrist affected pressing.", sets:[
+        { v:"35",   r:"3", feel:"Hard", done:true },
+        { v:"30",   r:"6", feel:"OK",   done:true },
+        { v:"32.5", r:"6", feel:"Hard", done:true },
+        { v:"32.5", r:"6", feel:"Hard", done:true }]},
+      2:{ nb:"", na:"", notes:"Final set rest cut short — out of time. All controlled. Next: 7.5kg on 2 sets.", sets:[
+        { v:"+5kg", r:"6", feel:"Easy", done:true },
+        { v:"+5kg", r:"6", feel:"Easy", done:true },
+        { v:"+5kg", r:"6", feel:"Easy", done:true },
+        { v:"+5kg", r:"6", feel:"Hard", done:true }]},
+      3:{ nb:"", na:"", notes:"Started left (weaker). Final set: left 8 / right only 5. Asymmetry — lead with weaker side each day. Hold 12kg.", sets:[
+        { v:"12", r:"8", feel:"OK",   done:true },
+        { v:"12", r:"8", feel:"Hard", done:true },
+        { v:"12", r:"8", feel:"Hard", done:true }]},
+      4:{ nb:"", na:"", notes:"Seconds in head — approximate. 70kg all 5 sets, 15-20s per 20m. Breathing heavy, legs aching. Perfect zone.", sets:[
+        { v:"70", r:"16", feel:"OK",   done:true },
+        { v:"70", r:"15", feel:"Hard", done:true },
+        { v:"70", r:"16", feel:"Hard", done:true },
+        { v:"70", r:"20", feel:"Hard", done:true },
+        { v:"70", r:"18", feel:"Hard", done:true }]},
+      5:{ nb:"", na:"", notes:"Skipped — ran out of time. Session bar will prevent this.", sets:[
+        { v:"", r:"", feel:"", done:false },
+        { v:"", r:"", feel:"", done:false },
+        { v:"", r:"", feel:"", done:false }]}
+    }
   }
 };
 
@@ -550,17 +608,25 @@ function blankFor(){
   const s = { version:"v3", activeView:"d1", log:{} };
   PROGRAM.days.forEach(d=>{
     if(d.kind==="stats") return;
-    s.log[d.id] = { rest:false, reflection:{ strongest:"", weakest:"", overall:"" }, ex:{} };
+    s.log[d.id] = { rest:false, sessionStart:null, reflection:{ strongest:"", weakest:"", overall:"" }, ex:{} };
     (d.ex||[]).forEach((e,i)=>{
       s.log[d.id].ex[i] = { sets: Array(e.sets).fill(0).map(()=>blankSet()), notes:"", nb:"", na:"" };
     });
   });
-  // pre-fill Day 1 with Monday (Week 3) session
-  Object.entries(PREFILL_D1.ex).forEach(([i,data])=>{
-    s.log.d1.ex[+i].sets = data.sets.map(x=>({...x}));
-    s.log.d1.ex[+i].notes = data.notes;
+  // Apply all Week 3 session prefills
+  Object.entries(WEEK3_PREFILLS).forEach(([did, data])=>{
+    if(!s.log[did]) return;
+    if(data.rest !== undefined) s.log[did].rest = data.rest;
+    if(data.sessionStart) s.log[did].sessionStart = data.sessionStart;
+    if(data.reflection) s.log[did].reflection = {...data.reflection};
+    Object.entries(data.ex||{}).forEach(([i, exData])=>{
+      if(!s.log[did].ex[+i]) return;
+      if(exData.sets) s.log[did].ex[+i].sets = exData.sets.map(x=>({...x}));
+      if(exData.notes !== undefined) s.log[did].ex[+i].notes = exData.notes;
+      if(exData.nb !== undefined) s.log[did].ex[+i].nb = exData.nb;
+      if(exData.na !== undefined) s.log[did].ex[+i].na = exData.na;
+    });
   });
-  s.log.d1.reflection = {...PREFILL_D1.reflection};
   return s;
 }
 async function loadState(){
@@ -575,6 +641,7 @@ async function loadState(){
     Object.keys(base.log).forEach(did=>{
       const L = loaded.log && loaded.log[did]; if(!L) return;
       base.log[did].rest = !!L.rest;
+      if(L.sessionStart) base.log[did].sessionStart = L.sessionStart;
       if(L.reflection){
         base.log[did].reflection.strongest = L.reflection.strongest || base.log[did].reflection.strongest;
         base.log[did].reflection.weakest   = L.reflection.weakest   || base.log[did].reflection.weakest;
@@ -761,6 +828,80 @@ function render(){
   renderDay(d);
 }
 
+/* ---------------- SESSION ETA BAR ---------------- */
+const SET_SEC = 45;        // avg seconds per working set (setup + execution)
+const WARMUP_SEC = 300;    // ~5 min day warm-up for strength
+let sessionBarInt = null;
+
+function estimateExerciseSec(e){
+  if(typeof e.estSec === "number") return e.estSec;
+  return e.sets * (SET_SEC + (e.rest||0));
+}
+function estimateDaySec(d){
+  let s = (d.kind==="strength") ? WARMUP_SEC : 0;
+  (d.ex||[]).forEach(e=>{ s += estimateExerciseSec(e); });
+  return s;
+}
+function fmtClock(ts){
+  return new Date(ts).toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+}
+function fmtMin(sec){
+  const m = Math.round(sec/60);
+  if(m < 60) return m + " min";
+  return Math.floor(m/60) + "h " + (m%60) + "m";
+}
+function renderSessionBar(d, container){
+  if(d.kind!=="strength" && d.kind!=="cardio") return;
+  const st = dayStats(d);
+  const frac = st.total ? st.done/st.total : 0;
+  const totalSec = estimateDaySec(d);
+  const card = document.createElement("div");
+  card.className = "sessionbar"; card.id = "sessionBar";
+  card.innerHTML = `
+    <div class="sbtop">
+      <span class="sbpct" id="sbPct">${Math.round(frac*100)}%</span>
+      <span class="sbsets">${st.done}/${st.total} sets</span>
+      <span class="sbtotal">≈ ${fmtMin(totalSec)} total</span>
+    </div>
+    <div class="sbbar"><i id="sbFill" style="width:${frac*100}%"></i></div>
+    <div class="sbfinish" id="sbFinish"></div>`;
+  container.appendChild(card);
+  updateSessionFinish(d);
+  if(sessionBarInt) clearInterval(sessionBarInt);
+  sessionBarInt = setInterval(()=>updateSessionFinish(d), 20000);
+}
+function updateSessionFinish(d){
+  const el = document.getElementById("sbFinish"); if(!el) return;
+  const st = dayStats(d);
+  const frac = st.total ? st.done/st.total : 0;
+  const totalSec = estimateDaySec(d);
+  const remainSec = totalSec * (1 - frac);
+  const start = state.log[d.id].sessionStart;
+  let html = "";
+  if(st.done === 0){
+    html = `Tick a set to lock your finish estimate · full session ≈ ${fmtMin(totalSec)}`;
+  } else if(frac >= 1){
+    const dur = start ? Math.round((Date.now()-start)/1000) : totalSec;
+    html = `✓ Session complete${start ? ` · took ${fmtMin(dur)}` : ""}`;
+  } else {
+    const finishTs = Date.now() + remainSec*1000;
+    html = `≈ ${fmtMin(remainSec)} left · finish ~<b>${fmtClock(finishTs)}</b>`;
+    if(start){ html += ` · started ${fmtClock(start)}`; }
+  }
+  el.innerHTML = html;
+}
+function refreshSessionBar(d){
+  const pct=document.getElementById("sbPct"), fill=document.getElementById("sbFill");
+  if(!pct||!fill) return;
+  const st=dayStats(d);
+  const frac=st.total? st.done/st.total : 0;
+  pct.textContent = Math.round(frac*100)+"%";
+  fill.style.width = (frac*100)+"%";
+  const setsEl = document.querySelector("#sessionBar .sbsets");
+  if(setsEl) setsEl.textContent = `${st.done}/${st.total} sets`;
+  updateSessionFinish(d);
+}
+
 function renderDay(d){
   const p=document.getElementById("dayPanel"); p.innerHTML="";
   const head=document.createElement("div"); head.className="dayhead";
@@ -779,6 +920,8 @@ function renderDay(d){
   }
 
   if(d.warm){ const w=document.createElement("div"); w.className="wu"; w.innerHTML=`<b>Day warm-up</b>${d.warm}`; p.appendChild(w); }
+
+  renderSessionBar(d, p);
 
   if(d.audio) renderAudioCard(d, p);
 
@@ -842,7 +985,8 @@ function renderDay(d){
         const tick=row.querySelector(".settick");
         tick.classList.toggle("on",L.sets[k].done);
         tick.textContent=L.sets[k].done?'✓':'○';
-        saveState(); refreshProgress();
+        if(L.sets[k].done && !state.log[d.id].sessionStart){ state.log[d.id].sessionStart = Date.now(); }
+        saveState(); refreshProgress(); refreshSessionBar(d);
         if(L.sets[k].done && e.rest>0) startTimer(e.rest, e.n);
       };
     });
@@ -925,12 +1069,14 @@ function renderStats(){
 
   // ---- Week-over-week progression (hardcoded history W1→W3) ----
   const PROG = [
-    { n:"Back Squat",   unit:"kg", pts:[{label:"W1",value:57.5},{label:"W2",value:57.5},{label:"W3",value:62.5}], note:"W1 ramped → W2 clean ×4 Easy → W3 +5kg" },
-    { n:"Bench Press",  unit:"kg", pts:[{label:"W1",value:57.5},{label:"W2",value:57.5},{label:"W3",value:57.5}], note:"Holding 57.5 till Hard → OK, then push 60" },
-    { n:"Overhead Press (true)", unit:"kg", pts:[{label:"W2",value:41},{label:"W3",value:46}], note:"Too easy at 41 → +5kg this week" },
-    { n:"Farmer Carry", unit:"kg", pts:[{label:"W1",value:24},{label:"W2",value:24},{label:"W3",value:26}], note:"W1 slipped @30m → W2 unbroken → W3 +2kg" },
-    { n:"Sled Push",    unit:"kg", pts:[{label:"W2",value:60},{label:"W3",value:70}], note:"Top working load, +10kg this week" },
-    { n:"Bulgarian SS", unit:"kg", pts:[{label:"W2",value:10},{label:"W3",value:12}], note:"Per-hand DBs, weaker leg leads" }
+    { n:"Back Squat",   unit:"kg", pts:[{label:"W1",value:57.5},{label:"W2",value:57.5},{label:"W3",value:62.5}], note:"W2 ramped → W3 62.5×4 all Easy. Next: 65kg." },
+    { n:"Bench Press",  unit:"kg", pts:[{label:"W1",value:57.5},{label:"W2",value:57.5},{label:"W3",value:57.5}], note:"3 weeks at 57.5, consistently Hard — hold until sets drift OK, then push 60." },
+    { n:"OHP (true kg)",unit:"kg", pts:[{label:"W2",value:41},{label:"W3",value:32.5}], note:"W3 target 46 was too heavy (wrist + jump). Real working weight = 32.5. Rebuild from here." },
+    { n:"RDL",          unit:"kg", pts:[{label:"W1",value:55},{label:"W2",value:55},{label:"W3",value:57.5}], note:"Dizziness easing with breath work. Hold 57.5 — up to 60 when fully clear." },
+    { n:"Farmer Carry", unit:"kg", pts:[{label:"W1",value:24},{label:"W2",value:24},{label:"W3",value:26}], note:"W3: set 3 grip gave at 31m. Hold 26kg until 3×40m unbroken." },
+    { n:"Pull-up load", unit:"kg", pts:[{label:"W1",value:2.5},{label:"W2",value:5},{label:"W3",value:5}], note:"4×6 at +5kg, mostly Easy. Next: +5kg×2 + +7.5kg×2." },
+    { n:"Sled Push",    unit:"kg", pts:[{label:"W2",value:60},{label:"W3",value:70}], note:"70kg all 5 sets, 15-20s/20m. Perfect zone. Hold 70." },
+    { n:"Bulgarian SS", unit:"kg", pts:[{label:"W2",value:10},{label:"W3",value:12}], note:"12kg OK/Hard/Hard. L/R asymmetry — lead weaker side. Hold 12." }
   ];
   const progCard=document.createElement("div"); progCard.className="ex statsCard";
   let ph=`<div class="top"><div class="nm">Progression W1 → W3</div><div class="scheme">target ▲</div></div>
@@ -951,13 +1097,16 @@ function renderStats(){
   const cardioCard=document.createElement("div"); cardioCard.className="ex statsCard";
   cardioCard.innerHTML=`<div class="top"><div class="nm" style="font-size:15px;">Cardio</div></div>
     <div class="pellets">
-      <span class="pellet">Bleep baseline <b>7.1</b> (stale)</span>
-      <span class="pellet easy">Shuttles <b>8/8 rounds</b> Easy</span>
-      <span class="pellet">400m clean <b>1:45–1:59</b></span>
-      <span class="pellet hard">Stitch <b>limiting factor</b></span>
+      <span class="pellet hard">Bleep Test W3 <b>6.3</b> (fresh test — tired legs)</span>
+      <span class="pellet">Previous baseline <b>7.1</b> (invalid — night, hungry, unmeasured)</span>
+      <span class="pellet easy">Shuttles W2 <b>8/8 rounds</b> Easy</span>
+      <span class="pellet ok">400m W2 best <b>1:45</b> (sets 1–3 clean)</span>
+      <span class="pellet hard">Stitch <b>resolved</b> on bleep test ✓</span>
     </div>
-    <div style="font-size:11px;color:var(--dim);margin-top:8px;font-family:var(--mono);line-height:1.5;">
-      Next real number = bleep test (Tue, if stitch-free). Engine looks well past 7.1 — you cruised 8 shuttle rounds.</div>`;
+    <div style="font-size:11px;color:var(--dim);margin-top:8px;font-family:var(--mono);line-height:1.6;">
+      Real ceiling: ~7–7.5 (bleep was on tired legs post leg-day + hungry).<br>
+      Gap to Bucks standard (8.6): ~1–1.5 levels — closeable in 3–5 weeks of consistent easy runs + intervals.<br>
+      Next test: fresh legs, fed 90min before, after a rest day.</div>`;
   p.appendChild(cardioCard);
 
   // ---- STANDARDS vs YOU ----
