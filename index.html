@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>FF ENGINE · Week 3</title>
+<title>FF ENGINE · Week 4</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -313,7 +313,7 @@
 <div class="wrap">
   <header>
     <div class="kicker">Firefighter Acceleration · Block A</div>
-    <h1>FF <span>ENGINE</span><br>WEEK 3</h1>
+    <h1>FF <span>ENGINE</span><br>WEEK 4</h1>
     <div class="sub">2 strength (maintain) + 3 cardio (priority) + 2 rest. Cardio is the gate — strength holds on low volume. Target: pass &amp; exceed Bucks bleep (8.6), build the engine underneath it.</div>
     <div class="banner"><b>How to use:</b> each set has its <b>own weight + own feel + own tick</b>. Tap a set's feel pill (E/O/H) to mark just that set. Warm-ups are specified per lift — don't skip them. End each day with the <b>strongest/weakest</b> reflection. Hit <b>"Copy log for Claude"</b> and paste it back to me.</div>
 
@@ -388,39 +388,105 @@
 <script>
 /* ---------------- PROGRAM DATA ---------------- */
 const PROGRAM = {
-  week: "WEEK 3",
+  week: "WEEK 4",
   days: [
     { id:"d1", tag:"MON", short:"Strength A", type:"Strength", focus:"Full body · lower + push emphasis",
       cool:"Cooldown: 3–5 min walk + quad/hip stretch.",
       kind:"strength",
       ex:[
-        { n:"Back Squat", s:"4 × 5", sets:4, rest:180, t:"62.5 kg", unit:"kg",
-          last:"57.5kg × 4×5 — all Easy",
+        { n:"Back Squat", s:"4 × 5", sets:4, rest:180, t:"65 kg", unit:"kg",
+          last:"62.5kg × 4×5 — all Easy (3 working sets)",
           warm:"Bar × 8  →  40kg × 5  →  55kg × 3  →  working sets",
-          c:"Brace hard, parallel depth, controlled descent. <em>Up 5kg — you earned it. RPE 7, ~3 reps left at rep 5.</em>" },
-        { n:"Bench Press", s:"4 × 5", sets:4, rest:150, t:"57.5 kg (HOLD)", unit:"kg",
-          last:"57.5kg × 4×5 — all Hard",
+          c:"Brace hard, parallel depth, controlled. <em>65kg — bank a clean FULL 4×5 here (you only got 3 working sets at 62.5). If all Easy → 70 next week.</em>" },
+        { n:"Bench Press", s:"4 × 5", sets:4, rest:180, t:"57.5 kg (HOLD + FULL rest)", unit:"kg",
+          last:"57.5kg × 4×5 — all Hard (3rd week)",
           warm:"Bar × 10  →  30kg × 5  →  45kg × 3  →  working sets",
-          c:"<em>Hold 57.5 — don't add weight yet. Goal: get a couple of these sets to drift from Hard → OK. THEN we push 60.</em>" },
-        { n:"Pull-ups", s:"4 × 6", sets:4, rest:120, t:"+5 kg × 4 sets", unit:"free",
-          last:"2× +2.5kg, 2× +5kg",
-          warm:"2 × 15s dead hang + 3 BW reps to activate",
-          c:"Full dead hang, chin over bar, no kip. <em>Consolidate at +5kg for all 4 sets. If all clean → +7.5kg on 2 sets next week.</em>" },
-        { n:"Romanian Deadlift", s:"3 × 8", sets:3, rest:120, t:"57.5 kg", unit:"kg",
-          last:"55kg × 3×8 (Easy/Easy/OK) — dizzy after",
+          c:"<em>3 weeks stuck — but you've been rushing/cutting rest. Take the FULL 3 min between sets + warm up SEPARATELY. Bar speed should improve. If STILL all Hard with full rest → we deload to 55 and rebuild.</em>" },
+        { n:"Pull-ups", s:"4 × 6", sets:4, rest:120, t:"+5kg ×2  +  +7.5kg ×2", unit:"free",
+          last:"+5kg × 4×6 — mostly Easy",
+          warm:"2 × 15s dead hang + 3 BW reps",
+          c:"Full dead hang, chin over bar, no kip. <em>Step up: +5kg on sets 1–2, +7.5kg on sets 3–4. You're ahead of schedule here.</em>" },
+        { n:"Romanian Deadlift", s:"3 × 8", sets:3, rest:120, t:"60 kg", unit:"kg",
+          last:"57.5kg × 3×8 (OK/Hard/OK) — dizziness easing",
           warm:"Bar × 8  →  45kg × 5  →  working sets",
-          c:"Hinge, soft knees, neutral spine. RPE 7. <em>EXHALE on the way up (don't hold breath), and WALK after each set — don't sit. Fixes the dizziness.</em>" },
-        { n:"Farmer Carry", s:"3 × 40 m", sets:3, rest:90, t:"26 kg / hand", unit:"kg/hand", repPH:"m",
-          last:"24kg × 3×40m — unbroken ✓",
+          c:"Hinge, soft knees, neutral spine. <em>Up to 60kg — dizziness is easing. Keep EXHALING on the way up + WALK after each set. Don't sit.</em>" },
+        { n:"Farmer Carry", s:"3 × 40 m", sets:3, rest:90, t:"26 kg / hand (HOLD)", unit:"kg/hand", repPH:"m",
+          last:"26kg — set 3 grip gave at 31m",
           warm:"Light DBs × 20m to wake up the grip",
-          c:"Tall posture, crush handles. <em>Up to 26kg. Goal still 40m UNBROKEN — if grip slips before the line, that's your new edge, hold 26 till clean.</em>" },
-        { n:"Ab Wheel / V-ups", s:"3 × 10–12", sets:3, rest:60, t:"Bodyweight", unit:"reps",
-          last:"Hanging leg raise — grip-limited, no straps",
+          c:"<em>HOLD 26kg — don't go heavier. Goal: all 3 sets a clean 40m UNBROKEN. Once you nail that, then 28kg.</em> Tall posture, crush the handles." },
+        { n:"Ab Wheel / V-ups", s:"3 × 12", sets:3, rest:60, t:"Bodyweight", unit:"reps",
+          last:"Crunches 3×12 (Easy/OK/OK)",
           warm:"A few slow reps to find range",
-          c:"<em>Swapped off hanging raises so grip stops capping your abs.</em> Ab wheel rollouts (knees) or V-ups — slow, controlled, no momentum. Lying leg raises if neither." }
+          c:"<em>Move OFF crunches now — ab wheel rollouts (from knees) or V-ups give far more range & carryover.</em> Slow, controlled, brace hard, no momentum." }
       ]},
 
-    { id:"d2", tag:"TUE", short:"Bleep Test", type:"Cardio · Benchmark", focus:"Get the real number — IF stitch-free & fresh",
+    { id:"d2", tag:"TUE", short:"Easy Run", type:"Cardio · Base", focus:"Zone 2 — the engine (PRIORITY)",
+      warm:"2–3 min brisk walk into an easy jog.",
+      cool:"Cooldown: 3 min walk + light stretch.",
+      kind:"cardio",
+      ex:[
+        { n:"Easy Continuous Run", s:"33 min", sets:1, rest:0, estSec:2100, t:"Conversational · SLOWER not faster", unit:"free",
+          last:"6.5kph @ HR149 — felt very easy ✓ (faster than wk1 at same HR)",
+          c:"<em>THIS is the session you were skipping — and the one that's moving your numbers most.</em> Full sentences, could drop to a walk without changing speed. If avg HR &gt; 150, slow down. Small banana 20–30min before if hungry.",
+          logType:"cardio", logPH:"e.g. 3.6km / 33min / HR ~148 / easy" },
+        { n:"Dead Hangs (finisher)", s:"3 × max", sets:3, rest:60, estSec:300, t:"BW", unit:"sec",
+          last:"60s / 60s / 50s",
+          c:"Max hang, relaxed shoulders. Log seconds. Grip is climbing — beat 60s.",
+          logType:"cardio", logPH:"e.g. 65s" }
+      ]},
+
+    { id:"d3", tag:"WED", short:"REST", type:"Recovery", focus:"", kind:"rest",
+      msg:"Full rest or 20–30 min easy walk + 5 min hip/ankle mobility. WRIST: keep it moving gently, no loaded pressing. Adaptation happens here — sleep + protein." },
+
+    { id:"d4", tag:"THU", short:"Strength B", type:"Strength", focus:"Single-leg · shoulders · work capacity",
+      cool:"Cooldown: 3–5 min walk + shoulder & hip stretch.",
+      kind:"strength",
+      ex:[
+        { n:"Squat (wrist-dependent)", s:"4 × 6", sets:4, rest:180, t:"Front 50kg IF wrist 100% — else Back Squat 4×6 @ 55kg", unit:"kg",
+          last:"Front squat → wrist strain S2, swapped to back squat 62.5",
+          warm:"Bar × 8  →  35kg × 5  →  working sets",
+          c:"<em>Front rack loads the wrist — ONLY front squat if it's fully pain-free. Otherwise back squat 4×6 @ 55kg (lighter volume day, different to Mon's heavy 5s).</em> Goblet/leg press also fine." },
+        { n:"Shoulder Press (wrist-dependent)", s:"4 × 6", sets:4, rest:150, t:"+32.5kg Smith IF wrist OK — else neutral-grip DB press", unit:"kg",
+          last:"+32.5kg working (35 was too heavy + wrist)",
+          warm:"Bar × 8  →  +20kg × 5  →  working sets",
+          c:"<em>Hold +32.5kg (true ~44) — last week's 35 jump was too much. If wrist still sore, swap to neutral-grip DB press (palms facing, easier on the wrist) at matched effort.</em>" },
+        { n:"Strict / Weighted Pull-ups", s:"4 × 6", sets:4, rest:120, t:"+5kg ×2  +  +7.5kg ×2", unit:"free",
+          last:"+5kg × 4×6 — mostly Easy",
+          warm:"2 × 15s dead hang + 4 BW reps",
+          c:"Controlled, full range. <em>Step up to +7.5kg on the last 2 sets. If the bar bothers the wrist, use a neutral (hammer) grip.</em>" },
+        { n:"Bulgarian Split Squat", s:"3 × 8 / leg", sets:3, rest:90, t:"12 kg DBs / hand (HOLD)", unit:"kg",
+          last:"12kg — OK/Hard/Hard, R/L flips day to day",
+          warm:"Bodyweight × 8/leg (weaker side first)",
+          c:"<em>HOLD 12kg — last week was OK/Hard/Hard, consolidate it. Start with whichever leg feels weaker that day, match reps on the other.</em>" },
+        { n:"Sled Push", s:"5 × 20 m", sets:5, rest:90, t:"70 kg (HOLD)", unit:"kg", repPH:"sec/20m",
+          last:"70kg, 15–20s/20m — perfect zone",
+          warm:"Empty sled × 20m walk + 1 light push",
+          c:"Log seconds per 20m. <em>HOLD 70kg — you were dead in the target zone. Focus on CONSISTENT times across all 5 (last week drifted to 20s). 72.5kg only if all 5 land under ~16s.</em>" },
+        { n:"Rear-Delt Flies", s:"3 × 15", sets:3, rest:45, t:"5 kg DBs / hand", unit:"kg",
+          last:"SKIPPED — out of time (twice now)",
+          warm:"Light reps × 12 to warm shoulders",
+          c:"<em>DON'T skip again — the session bar at the top shows you the time so you can pace for it.</em> Bent at hips, raise DBs to parallel, lead with elbows, 1s squeeze. Band pull-aparts if no DBs." }
+      ]},
+
+    { id:"d5", tag:"FRI", short:"Easy Run", type:"Cardio · Base", focus:"Zone 2 — the engine (PRIORITY)",
+      warm:"2–3 min brisk walk into an easy jog.",
+      cool:"Cooldown: 3 min walk + light stretch.",
+      kind:"cardio",
+      ex:[
+        { n:"Easy Continuous Run", s:"33 min", sets:1, rest:0, estSec:2100, t:"Conversational · SLOWER not faster", unit:"free",
+          last:"Tuesday's run (your 2nd easy run of the week)",
+          c:"<em>Second easy run of the week — this is the doubling-down on base that grows your bleep ceiling.</em> Same as Tuesday: full sentences, relaxed, HR under 150. Belly-breathe. Should feel easier than Tuesday already.",
+          logType:"cardio", logPH:"e.g. 3.7km / 33min / HR ~146 / easy" },
+        { n:"Dead Hangs (finisher)", s:"3 × max", sets:3, rest:60, estSec:300, t:"BW", unit:"sec",
+          last:"Tuesday's hangs",
+          c:"Max hang. Log seconds. Keep the grip work ticking.",
+          logType:"cardio", logPH:"e.g. 65s" }
+      ]},
+
+    { id:"d6", tag:"SAT", short:"REST", type:"Recovery", focus:"Fresh legs for tomorrow's test", kind:"rest",
+      msg:"FULL REST — tomorrow is your real bleep test and you need fresh legs (last test was ruined by tired legs from leg day). Light walk + mobility only. Eat well, sleep well. Tomorrow we get your true number." },
+
+    { id:"d7", tag:"SUN", short:"Bleep Test", type:"Cardio · Benchmark", focus:"The REAL re-test — fresh legs this time",
       warm:"6–8 min easy jog + leg swings, A-skips, then 3 × 20m strides building to fast.",
       cool:"Cooldown: 5 min easy + calf & hip stretch.",
       kind:"cardio",
@@ -430,182 +496,66 @@ const PROGRAM = {
         rounds:8, prepTime:8, runTime:50, walkTime:70, totalTime:898
       },
       ex:[
-        { n:"Full Bleep Test (primary)", s:"to failure", sets:1, rest:0, estSec:540, t:"Measured 20m · daytime · fed 90min before", unit:"free",
-          last:"8 shuttle rounds, mostly Easy (~level 8)",
-          c:"Standard progressive bleep test, run to failure, record the level. <em>MEASURE the 20m properly (tape, or 20 strides) and mark both ends.</em> Use a standard bleep-test app (starts level 1 — NOT the level-8 shuttle audio). <em>ONLY do this if the stitch is gone and you feel fresh.</em>",
-          logType:"cardio", logPH:"e.g. reached level 9.4" },
+        { n:"Full Bleep Test", s:"to failure", sets:1, rest:0, estSec:600, t:"Measured 20m · FRESH legs · fed 90min before", unit:"free",
+          last:"W3: 6.3 — but on SORE legs (day after squats) + hungry",
+          c:"<em>The proper re-test. Everything is fixed for it: fresh legs (rest day yesterday), no leg-day fatigue.</em> MEASURE the 20m (tape or 20 strides), mark both ends. Standard level-1 bleep app. <em>Eat a proper carb meal 90min before + a banana 20–30min before — the hunger cost you reps last time.</em> Run to genuine failure.",
+          logType:"cardio", logPH:"e.g. reached level 8.2" },
         { n:"OR — 8× Shuttle (fallback)", s:"8 rounds", sets:8, rest:0, estSec:898, t:"50s hard / 70s easy", unit:"free",
-          last:"Distance was ~slightly short last time",
-          c:"If the stitch flares or you're not fresh: do the 8-round shuttle set instead (use the audio above) and we benchmark next week. Tight turns, even pacing.",
-          logType:"cardio", logPH:"e.g. round 1 OK, pace fine" }
+          last:"W2: 8/8 rounds Easy",
+          c:"Only if something's off (illness, niggle). Otherwise do the real test — you're ready for a clean number.",
+          logType:"cardio", logPH:"e.g. round 1 OK" }
       ],
-      note:"Decision: stitch GONE + feeling fresh → do the full bleep test for a real number. Stitch still there → fallback shuttles, test moves to Week 4. No deadline beats sorting the stitch out properly." },
-
-    { id:"d3", tag:"WED", short:"REST", type:"Recovery", focus:"", kind:"rest",
-      msg:"Full rest or a 20–30 min easy walk + 5 min hip/ankle mobility. Adaptation happens here — prioritise sleep and protein." },
-
-    { id:"d4", tag:"THU", short:"Strength B", type:"Strength", focus:"Single-leg · shoulders · work capacity",
-      cool:"Cooldown: 3–5 min walk + shoulder & hip stretch.",
-      kind:"strength",
-      ex:[
-        { n:"Front Squat", s:"4 × 5", sets:4, rest:180, t:"47.5 kg", unit:"kg",
-          last:"45kg × 4×5 — all OK (HR spike, yawning)",
-          warm:"Bar × 8  →  30kg × 5  →  40kg × 3  →  working sets",
-          c:"Elbows high, upright torso, brace. <em>Small +2.5kg bump. EXHALE up, WALK after each set instead of sitting — same fix as the RDL dizziness.</em>" },
-        { n:"Overhead Press", s:"4 × 6", sets:4, rest:150, t:"+35 kg added (≈46 true)", unit:"kg",
-          last:"+30kg × 4×6 — all Easy (~41 true on Smith)",
-          warm:"Bar × 8  →  +20kg × 5  →  +30kg × 3  →  working sets",
-          c:"Glutes tight, ribs down, press up & head through. <em>Was too light — jump to +35kg. Aim OK by set 4. (Smith base ~11.3kg, count as you have been.)</em>" },
-        { n:"Strict / Weighted Pull-ups", s:"4 × 6", sets:4, rest:120, t:"+5 kg × 4 sets", unit:"free",
-          last:"+2.5→+5kg (Easy / OK×3)",
-          warm:"2 × 15s dead hang + 4 BW reps",
-          c:"Controlled, full range. <em>Straight to +5kg for all 4 sets — no warm-up-in. If all OK → step up next week.</em>" },
-        { n:"Bulgarian Split Squat", s:"3 × 8 / leg", sets:3, rest:90, t:"12 kg DBs / hand", unit:"kg",
-          last:"10kg DBs × 3×8/leg — left weaker",
-          warm:"Bodyweight × 8/leg (weaker side first)",
-          c:"<em>Up to 12kg. Start with the WEAKER (left) leg, then match reps on the right.</em> Closing the L/R gap is the whole point." },
-        { n:"Sled Push", s:"5 × 20 m", sets:5, rest:90, t:"60kg set 1 → 70kg sets 2–5", unit:"kg", repPH:"sec/20m",
-          last:"+60kg, ~10–11s/20m (could do more)",
-          warm:"Empty sled × 20m walk + 1 light push",
-          c:"Log seconds per 20m in the reps box. <em>Push to 70kg — aiming for 12–15s/length where the cardio cost shows. FIX TRACTION: tighter shoes, or go socks/barefoot (no soft running shoes).</em>" },
-        { n:"Rear-Delt Flies", s:"3 × 15", sets:3, rest:45, t:"5 kg DBs / hand", unit:"kg",
-          last:"Face pulls SKIPPED — no cables",
-          warm:"Light reps × 12 to warm shoulders",
-          c:"<em>Cable-free swap for face pulls.</em> Bent at hips, chest forward, raise DBs out to the sides to parallel — lead with elbows, 1s squeeze, slow down. Go 6–7.5kg if 5 is too light. (Band pull-aparts also work.)" }
-      ]},
-
-    { id:"d5", tag:"FRI", short:"Easy Run", type:"Cardio · Base", focus:"Zone 2 — build the engine",
-      warm:"2–3 min brisk walk into an easy jog.",
-      cool:"Cooldown: 3 min walk + light stretch.",
-      kind:"cardio",
-      ex:[
-        { n:"Easy Continuous Run", s:"30 min", sets:1, rest:0, estSec:1980, t:"Conversational · SLOWER not faster", unit:"free",
-          last:"Missed last week",
-          c:"<em>Must feel easy — full sentences, could drop to a walk without changing speed.</em> If avg HR creeps above 145, slow down. <em>Stitch prevention: nothing solid within 2h, sip don't chug, belly-breathe (belly out on inhale).</em>",
-          logType:"cardio", logPH:"e.g. 4.0km / 30min / felt easy" },
-        { n:"Dead Hangs (finisher)", s:"3 × max", sets:3, rest:60, estSec:300, t:"BW", unit:"sec",
-          last:"Skipped last week",
-          c:"Hang for max time, relaxed shoulders. Log seconds per hang. Cheap grip work — don't skip it again.",
-          logType:"cardio", logPH:"e.g. 55s" }
-      ]},
-
-    { id:"d6", tag:"SAT", short:"Intervals", type:"Cardio · VO₂", focus:"Raise the ceiling — clean & even",
-      warm:"8–10 min easy jog + 3 strides. Eat 90min before, hydrate 1–2h before.",
-      cool:"Cooldown: 5–10 min easy jog + stretch.",
-      kind:"cardio",
-      ex:[
-        { n:"400m Intervals", s:"6 × 400 m", sets:6, rest:0, estSec:1500, t:"EVEN splits ~1:50–2:00 · 90s+ rest", unit:"free",
-          last:"1:45–1:59 clean (sets 1–3), stitch wrecked 4–6",
-          c:"<em>This week's goal is a CLEAN, stitch-free 6 — not a fast 6.</em> Don't chase 1:45 if it costs the back half. Belly-breathe; exhale as your RIGHT foot lands. <em>If a stitch doesn't clear in 60s of slowing — STOP the session.</em> Same loop you measured.",
-          logType:"cardio", logPH:"e.g. 1:55" }
-      ],
-      note:"Alt: 5 × 3 min hard / 2 min easy. Take all the rest you need — extra rest is fine." },
-
-    { id:"d7", tag:"SUN", short:"REST", type:"Recovery", focus:"", kind:"rest",
-      msg:"Full recovery. Sleep + protein. Paste me your week's logs and I'll build Week 4." },
+      note:"This closes Week 4. Paste me your week's logs (especially this test) and I'll build Week 5 — where intervals return alongside the easy-run base." },
 
     { id:"stats", tag:"📊", short:"Stats", type:"Progress", kind:"stats" }
   ]
 };
 
-/* ---------------- WEEK 3 SESSION PREFILLS ---------------- */
-const WEEK3_PREFILLS = {
+/* ---------------- SESSION PREFILLS (logged sessions added as completed) ---------------- */
+const WEEK_PREFILLS = {
   d1: {
     sessionStart: null,
-    reflection:{ strongest:"Squats — 62.5 all Easy, clean jump.", weakest:"Grip (farmer carry 31m) + bench still Hard.", overall:"Easy" },
+    reflection:{ strongest:"Squats — 65kg 4×5 clean. Pull-ups step to +7.5 executed.", weakest:"Farmer carry still breaking at 31m (same as last week). Abs still crunches.", overall:"OK" },
     ex:{
-      0:{ nb:"", na:"", notes:"60 warm-in, 62.5×3 all Easy. Flying. Next: 65kg.", sets:[
-        { v:"60",   r:"5", feel:"Easy", done:true },
-        { v:"62.5", r:"5", feel:"Easy", done:true },
-        { v:"62.5", r:"5", feel:"Easy", done:true },
-        { v:"62.5", r:"5", feel:"Easy", done:true }]},
-      1:{ nb:"", na:"", notes:"2nd week at 57.5, still all Hard. Hold — bench lags pull strength. It'll come.", sets:[
+      0:{ nb:"", na:"", notes:"65×5 all sets at OK-leaning-Easy. Clean step from 62.5. Next: 67.5kg.", sets:[
+        { v:"65", r:"5", feel:"OK", done:true },
+        { v:"65", r:"5", feel:"OK", done:true },
+        { v:"65", r:"5", feel:"OK", done:true },
+        { v:"65", r:"5", feel:"OK", done:true }]},
+      1:{ nb:"", na:"", notes:"Week 4 at 57.5, still Hard but getting better — hold. Bar speed improving. Do NOT deload yet.", sets:[
         { v:"57.5", r:"5", feel:"Hard", done:true },
         { v:"57.5", r:"5", feel:"Hard", done:true },
         { v:"57.5", r:"5", feel:"Hard", done:true },
         { v:"57.5", r:"5", feel:"Hard", done:true }]},
-      2:{ nb:"", na:"", notes:"+5kg now easy across all 4. Next: 5kg×2 + 7.5kg×2.", sets:[
-        { v:"+5kg", r:"6", feel:"Easy", done:true },
-        { v:"+5kg", r:"6", feel:"Easy", done:true },
-        { v:"+5kg", r:"6", feel:"Easy", done:true },
-        { v:"+5kg", r:"6", feel:"OK",   done:true }]},
-      3:{ nb:"", na:"", notes:"Dizziness easing — breath work helping. Hold 57.5, exhale up + walk after sets.", sets:[
-        { v:"57.5", r:"8", feel:"OK",   done:true },
-        { v:"57.5", r:"8", feel:"Hard", done:true },
-        { v:"57.5", r:"8", feel:"OK",   done:true }]},
-      4:{ nb:"", na:"", notes:"Grip gave at 31m on set 3. Hold 26kg until 3×40m unbroken.", sets:[
+      2:{ nb:"", na:"", notes:"+5kg Easy on sets 1-2, +7.5kg OK/Hard on sets 3-4. Last rep barely made on set 4 — perfect RPE. Next: all 4 sets +7.5kg.", sets:[
+        { v:"+5kg",   r:"6", feel:"Easy", done:true },
+        { v:"+5kg",   r:"6", feel:"Easy", done:true },
+        { v:"+7.5kg", r:"6", feel:"OK",   done:true },
+        { v:"+7.5kg", r:"6", feel:"Hard", done:true }]},
+      3:{ nb:"", na:"", notes:"60kg challenging — OK/Hard/Hard. Real step from 57.5. Hold 60 until 3×8 at OK/OK/OK.", sets:[
+        { v:"60", r:"8", feel:"OK",   done:true },
+        { v:"60", r:"8", feel:"Hard", done:true },
+        { v:"60", r:"8", feel:"Hard", done:true }]},
+      4:{ nb:"", na:"", notes:"Same as last week: 40/40/31m. Grip plateau at 26kg. Try chalk next session, or switch to 5×25m structure.", sets:[
         { v:"26", r:"40", feel:"Easy", done:true },
         { v:"26", r:"40", feel:"OK",   done:true },
-        { v:"26", r:"31", feel:"OK",   done:true }]},
-      5:{ nb:"", na:"", notes:"Did crunches — switch to V-ups or ab wheel next time for better range.", sets:[
+        { v:"26", r:"31", feel:"Hard", done:true }]},
+      5:{ nb:"", na:"", notes:"Crunches again (3rd session). MUST switch to ab wheel / V-ups / hollow holds next time — crunches not doing the job.", sets:[
         { v:"BW", r:"12", feel:"Easy", done:true },
         { v:"BW", r:"12", feel:"OK",   done:true },
         { v:"BW", r:"12", feel:"OK",   done:true }]}
     }
-  },
-  d2: {
-    sessionStart: null,
-    reflection:{ strongest:"No stitch — fueling/breathing fixes worked.", weakest:"Legs sore from Mon leg day — impacted score.", overall:"Hard" },
-    ex:{
-      0:{ nb:"Felt slightly tired, legs sore from Monday (back/lower glutes). Did stretches. Feeling hopeful to beat score.", na:"Had to lay down after. Hungry from level 5 to end. Missed beep 3 times near end. Breathing painful towards end. Disappointed with score.", notes:"20m properly measured and confirmed. No stitch. Score: 6.3. Test done on tired legs day after heavy leg day.", sets:[
-        { v:"6.3", r:"", feel:"Hard", done:true }]},
-      1:{ nb:"", na:"", notes:"Full bleep test done — fallback not used.", sets:[
-        { v:"", r:"", feel:"", done:false },
-        { v:"", r:"", feel:"", done:false },
-        { v:"", r:"", feel:"", done:false },
-        { v:"", r:"", feel:"", done:false },
-        { v:"", r:"", feel:"", done:false },
-        { v:"", r:"", feel:"", done:false },
-        { v:"", r:"", feel:"", done:false },
-        { v:"", r:"", feel:"", done:false }]}
-    }
-  },
-  d3:{ sessionStart:null, rest:true, reflection:{ strongest:"", weakest:"", overall:"" }, ex:{} },
-  d4: {
-    sessionStart: null,
-    reflection:{ strongest:"Sled 70kg all 5 sets + pull-ups flying.", weakest:"Wrist strain (front rack), OHP disrupted, rear-delt flies skipped.", overall:"Hard" },
-    ex:{
-      0:{ nb:"", na:"", notes:"S1 front squat 47.5 easy. S2 wrist strained — swapped to back squat 62.5. Front squat paused until wrist heals.", sets:[
-        { v:"47.5", r:"5", feel:"Easy", done:true },
-        { v:"62.5", r:"5", feel:"OK",   done:true },
-        { v:"62.5", r:"5", feel:"OK",   done:true },
-        { v:"62.5", r:"5", feel:"OK",   done:true }]},
-      1:{ nb:"", na:"", notes:"35kg too heavy S1 (3 reps). Dropped to 30, then 32.5×6. Real working weight = 32.5kg. Wrist affected pressing.", sets:[
-        { v:"35",   r:"3", feel:"Hard", done:true },
-        { v:"30",   r:"6", feel:"OK",   done:true },
-        { v:"32.5", r:"6", feel:"Hard", done:true },
-        { v:"32.5", r:"6", feel:"Hard", done:true }]},
-      2:{ nb:"", na:"", notes:"Final set rest cut short — out of time. All controlled. Next: 7.5kg on 2 sets.", sets:[
-        { v:"+5kg", r:"6", feel:"Easy", done:true },
-        { v:"+5kg", r:"6", feel:"Easy", done:true },
-        { v:"+5kg", r:"6", feel:"Easy", done:true },
-        { v:"+5kg", r:"6", feel:"Hard", done:true }]},
-      3:{ nb:"", na:"", notes:"Started left (weaker). Final set: left 8 / right only 5. Asymmetry — lead with weaker side each day. Hold 12kg.", sets:[
-        { v:"12", r:"8", feel:"OK",   done:true },
-        { v:"12", r:"8", feel:"Hard", done:true },
-        { v:"12", r:"8", feel:"Hard", done:true }]},
-      4:{ nb:"", na:"", notes:"Seconds in head — approximate. 70kg all 5 sets, 15-20s per 20m. Breathing heavy, legs aching. Perfect zone.", sets:[
-        { v:"70", r:"16", feel:"OK",   done:true },
-        { v:"70", r:"15", feel:"Hard", done:true },
-        { v:"70", r:"16", feel:"Hard", done:true },
-        { v:"70", r:"20", feel:"Hard", done:true },
-        { v:"70", r:"18", feel:"Hard", done:true }]},
-      5:{ nb:"", na:"", notes:"Skipped — ran out of time. Session bar will prevent this.", sets:[
-        { v:"", r:"", feel:"", done:false },
-        { v:"", r:"", feel:"", done:false },
-        { v:"", r:"", feel:"", done:false }]}
-    }
   }
-};
+};  // more days added as sessions complete
 
 /* ---------------- STATE + STORAGE ---------------- */
-const SKEY = "ff_engine_tracker_v3";
+const SKEY = "ff_engine_tracker_v4";
 let state = {};
 let activeView = "d1";
 
 function blankSet(){ return { v:"", r:"", feel:"", done:false }; }
 function blankFor(){
-  const s = { version:"v3", activeView:"d1", log:{} };
+  const s = { version:"v4", activeView:"d1", log:{} };
   PROGRAM.days.forEach(d=>{
     if(d.kind==="stats") return;
     s.log[d.id] = { rest:false, sessionStart:null, reflection:{ strongest:"", weakest:"", overall:"" }, ex:{} };
@@ -613,8 +563,8 @@ function blankFor(){
       s.log[d.id].ex[i] = { sets: Array(e.sets).fill(0).map(()=>blankSet()), notes:"", nb:"", na:"" };
     });
   });
-  // Apply all Week 3 session prefills
-  Object.entries(WEEK3_PREFILLS).forEach(([did, data])=>{
+  // Apply session prefills (empty until sessions logged)
+  Object.entries(WEEK_PREFILLS).forEach(([did, data])=>{
     if(!s.log[did]) return;
     if(data.rest !== undefined) s.log[did].rest = data.rest;
     if(data.sessionStart) s.log[did].sessionStart = data.sessionStart;
@@ -636,7 +586,7 @@ async function loadState(){
     if(raw) loaded = JSON.parse(raw);
   }catch(e){ loaded=null; }
   const base = blankFor();
-  if(loaded && loaded.version==="v3"){
+  if(loaded && loaded.version==="v4"){
     base.activeView = loaded.activeView || "d1";
     Object.keys(base.log).forEach(did=>{
       const L = loaded.log && loaded.log[did]; if(!L) return;
@@ -1007,7 +957,7 @@ function renderDay(d){
   const rfx=document.createElement("div"); rfx.className="reflect";
   rfx.innerHTML=`
     <h3>End of session</h3>
-    <p>Helps me adjust Week 4 faster. Skip if you don't have it.</p>
+    <p>Helps me adjust Week 5 faster. Skip if you don't have it.</p>
     <div class="rfield"><span class="rk">What felt strongest</span>
       <textarea data-rf="strongest" placeholder="e.g. legs — squats clean, RDL progressed">${esc(R.strongest)}</textarea></div>
     <div class="rfield"><span class="rk">What felt weakest</span>
@@ -1041,7 +991,7 @@ function esc(s){ return String(s||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;
 function renderStats(){
   const p=document.getElementById("dayPanel"); p.innerHTML="";
   const head=document.createElement("div"); head.className="dayhead";
-  head.innerHTML=`<div class="type">Progress</div><h2>Stats</h2><div class="focus">Week 3 · tracking progress week over week</div>`;
+  head.innerHTML=`<div class="type">Progress</div><h2>Stats</h2><div class="focus">Week 4 · tracking progress week over week</div>`;
   p.appendChild(head);
 
   // Summary
@@ -1058,7 +1008,7 @@ function renderStats(){
   });
   const sum=document.createElement("div"); sum.className="ex statsCard";
   sum.innerHTML=`
-    <div class="top"><div class="nm">Week 3 Summary</div></div>
+    <div class="top"><div class="nm">Week 4 Summary</div></div>
     <div class="statgrid">
       <div class="statcell"><div class="k">Sets done</div><div class="v">${totalDone}<span style="font-size:13px;color:var(--muted);"> / ${totalAll}</span></div></div>
       <div class="statcell"><div class="k">Completion</div><div class="v">${totalAll?Math.round(totalDone/totalAll*100):0}%</div></div>
@@ -1069,14 +1019,14 @@ function renderStats(){
 
   // ---- Week-over-week progression (hardcoded history W1→W3) ----
   const PROG = [
-    { n:"Back Squat",   unit:"kg", pts:[{label:"W1",value:57.5},{label:"W2",value:57.5},{label:"W3",value:62.5}], note:"W2 ramped → W3 62.5×4 all Easy. Next: 65kg." },
-    { n:"Bench Press",  unit:"kg", pts:[{label:"W1",value:57.5},{label:"W2",value:57.5},{label:"W3",value:57.5}], note:"3 weeks at 57.5, consistently Hard — hold until sets drift OK, then push 60." },
-    { n:"OHP (true kg)",unit:"kg", pts:[{label:"W2",value:41},{label:"W3",value:32.5}], note:"W3 target 46 was too heavy (wrist + jump). Real working weight = 32.5. Rebuild from here." },
-    { n:"RDL",          unit:"kg", pts:[{label:"W1",value:55},{label:"W2",value:55},{label:"W3",value:57.5}], note:"Dizziness easing with breath work. Hold 57.5 — up to 60 when fully clear." },
-    { n:"Farmer Carry", unit:"kg", pts:[{label:"W1",value:24},{label:"W2",value:24},{label:"W3",value:26}], note:"W3: set 3 grip gave at 31m. Hold 26kg until 3×40m unbroken." },
-    { n:"Pull-up load", unit:"kg", pts:[{label:"W1",value:2.5},{label:"W2",value:5},{label:"W3",value:5}], note:"4×6 at +5kg, mostly Easy. Next: +5kg×2 + +7.5kg×2." },
-    { n:"Sled Push",    unit:"kg", pts:[{label:"W2",value:60},{label:"W3",value:70}], note:"70kg all 5 sets, 15-20s/20m. Perfect zone. Hold 70." },
-    { n:"Bulgarian SS", unit:"kg", pts:[{label:"W2",value:10},{label:"W3",value:12}], note:"12kg OK/Hard/Hard. L/R asymmetry — lead weaker side. Hold 12." }
+    { n:"Back Squat",   unit:"kg", pts:[{label:"W1",value:57.5},{label:"W2",value:57.5},{label:"W3",value:62.5},{label:"W4",value:65}], note:"Fastest mover. 62.5 all Easy → 65 this week, then 70." },
+    { n:"Bench Press",  unit:"kg", pts:[{label:"W1",value:57.5},{label:"W2",value:57.5},{label:"W3",value:57.5},{label:"W4",value:57.5}], note:"3 wks stuck at 57.5 Hard. Hold + FULL rest this week; deload to 55 if still stuck." },
+    { n:"OHP (true kg)",unit:"kg", pts:[{label:"W2",value:41},{label:"W3",value:44},{label:"W4",value:44}], note:"35 jump was too much. Hold ~44 (wrist-dependent this week)." },
+    { n:"RDL",          unit:"kg", pts:[{label:"W1",value:55},{label:"W2",value:55},{label:"W3",value:57.5},{label:"W4",value:60}], note:"Dizziness easing with breath work → up to 60." },
+    { n:"Farmer Carry", unit:"kg", pts:[{label:"W1",value:24},{label:"W2",value:24},{label:"W3",value:26},{label:"W4",value:26}], note:"Gave at 31m last week. HOLD 26 until clean 3×40m, then 28." },
+    { n:"Pull-up load", unit:"kg", pts:[{label:"W1",value:2.5},{label:"W2",value:5},{label:"W3",value:5},{label:"W4",value:7.5}], note:"Mostly Easy at +5. Step to +7.5 on 2 sets — ahead of schedule." },
+    { n:"Sled Push",    unit:"kg", pts:[{label:"W2",value:60},{label:"W3",value:70},{label:"W4",value:70}], note:"70kg = perfect cardio zone. Hold, chase consistent times." },
+    { n:"Bulgarian SS", unit:"kg", pts:[{label:"W2",value:10},{label:"W3",value:12},{label:"W4",value:12}], note:"OK/Hard/Hard — consolidate 12kg. Lead weaker leg." }
   ];
   const progCard=document.createElement("div"); progCard.className="ex statsCard";
   let ph=`<div class="top"><div class="nm">Progression W1 → W3</div><div class="scheme">target ▲</div></div>
@@ -1097,16 +1047,16 @@ function renderStats(){
   const cardioCard=document.createElement("div"); cardioCard.className="ex statsCard";
   cardioCard.innerHTML=`<div class="top"><div class="nm" style="font-size:15px;">Cardio</div></div>
     <div class="pellets">
-      <span class="pellet hard">Bleep Test W3 <b>6.3</b> (fresh test — tired legs)</span>
-      <span class="pellet">Previous baseline <b>7.1</b> (invalid — night, hungry, unmeasured)</span>
-      <span class="pellet easy">Shuttles W2 <b>8/8 rounds</b> Easy</span>
-      <span class="pellet ok">400m W2 best <b>1:45</b> (sets 1–3 clean)</span>
-      <span class="pellet hard">Stitch <b>resolved</b> on bleep test ✓</span>
+      <span class="pellet easy">400m PR <b>1:34</b> all-time best (W3)</span>
+      <span class="pellet easy">Easy run <b>6.5kph @ HR149</b> — faster, same effort vs W1</span>
+      <span class="pellet easy">Stitch <b>SOLVED</b> ✓ (fueling + breathing)</span>
+      <span class="pellet hard">Bleep <b>6.3</b> (invalid — sore legs) → re-test Sun</span>
+      <span class="pellet">Target <b>8.6</b> (Bucks FF standard)</span>
     </div>
     <div style="font-size:11px;color:var(--dim);margin-top:8px;font-family:var(--mono);line-height:1.6;">
-      Real ceiling: ~7–7.5 (bleep was on tired legs post leg-day + hungry).<br>
-      Gap to Bucks standard (8.6): ~1–1.5 levels — closeable in 3–5 weeks of consistent easy runs + intervals.<br>
-      Next test: fresh legs, fed 90min before, after a rest day.</div>`;
+      W3 breakthrough: finally did the easy runs → immediate PRs on both economy & intervals.<br>
+      Sunday's bleep is the real re-test (fresh legs, fed). Expect well above 6.3.<br>
+      Engine is building fast — keep the 2× weekly easy runs going.</div>`;
   p.appendChild(cardioCard);
 
   // ---- STANDARDS vs YOU ----
